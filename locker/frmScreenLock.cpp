@@ -32,7 +32,7 @@
 
 #ifdef DEBUG_MODE
 	#define DUMMY_FILE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\test.exe"
-	#define DUMMY_STUDIO_THIS_EXE "C:\\-\\Andre\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\AHXRLocker.exe" 
+	#define DUMMY_STUDIO_THIS_EXE "C:\\-\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\AHXRLocker.exe" 
 	#define DUMMY_PASSWORD "hi"
 	#define DUMMY_MESSAGE "Locked out :)"
 #endif
