@@ -2,7 +2,8 @@
 
 <p align="center">
 	<img src="https://i.imgur.com/EqihWFg.png" /> 
-	<img width="406" height="592" src="https://i.imgur.com/UzyOWNK.png" />
+	<br />
+	<img src="https://i.imgur.com/UzyOWNK.png" />
 </p>
 
 ---
