@@ -40,6 +40,7 @@ using namespace System::ComponentModel;
 
 bool b_password_res;
 HANDLE t_handle;
+DWORD d_thread_id;
 
 DWORD WINAPI calculateHandleData(LPVOID lpParameter);
 
@@ -48,7 +49,7 @@ DWORD WINAPI calculateHandleData(LPVOID lpParameter);
 #endif
 
 void startHandleThreading() {
-	DWORD d_thread_id;
+	
 	t_handle = CreateThread(0, 0, calculateHandleData, 0, 0, &d_thread_id);
 }
 

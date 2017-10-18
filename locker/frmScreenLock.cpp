@@ -20,26 +20,17 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#define MAX_PASSWORD_SIZE 16
-#define PASSWORD_HASH_LENGTH 64
-#define CHARACTERS_SEEK_BACK 88
-#define MAX_READING_SIZE 90
-#define SEARCH_OPENER '{'
-#define SEARCH_CLOSER '}'
-
 //#define DEBUG_MODE
 #define MINIMIZE_WINDOWS
-
-#ifdef DEBUG_MODE
-	#define DUMMY_FILE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\test.exe"
-	#define DUMMY_STUDIO_THIS_EXE "C:\\-\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\AHXRLocker.exe" 
-	#define DUMMY_PASSWORD "hi"
-	#define DUMMY_MESSAGE "Locked out :)"
-#endif
 
 static void comparePasswords(System::String ^ passwordInput);
 static System::String ^ getMessage();
 
+#ifdef DEBUG_MODE
+	#include "debug.h"
+#endif
+
+#include "readSettings.h"
 #include "windowMinimize.h"
 #include "sha256.h"
 #include "frmScreenLock.h"
@@ -58,10 +49,6 @@ static std::string
 	s_password,
 	s_message
 ;
-
-#ifdef DEBUG_MODE
-static void packLocker(std::string fileName, std::string password, std::string message);
-#endif
 
 [STAThread]
 int main() {
@@ -130,6 +117,10 @@ int main() {
 		std::string 
 			s_search(c_search, MAX_READING_SIZE);
 
+		// Don't open the application if there is no pack.
+		if (s_search.find(SEARCH_OPENER) == std::string::npos || s_search.find(SEARCH_CLOSER) == std::string::npos)
+			exit(0);
+
 		// Obtaining the password hash.
 		size_t t_pw_open = s_search.find(SEARCH_OPENER);
 		size_t t_pw_close = s_search.find(SEARCH_CLOSER);
@@ -156,9 +147,7 @@ int main() {
 	else
 		Application::Exit();
 
-	// Starting the lockdown.
 	startHandleThreading(); // Locking the program & taskmgr.
-	//minimizeAllWindows();
 
 	// Running the form.
 	Application::EnableVisualStyles();
@@ -172,9 +161,9 @@ int main() {
 
 
 static void comparePasswords(String ^ passwordInput) {
-
 	std::string
-		s_input;
+		s_input
+	;
 
 	s_input = marshal_as< std::string >(passwordInput);
 	s_input = sha256(s_input);
@@ -188,32 +177,3 @@ static void comparePasswords(String ^ passwordInput) {
 static String ^ getMessage() {
 	return gcnew String(s_message.c_str());
 }
-
-#ifdef DEBUG_MODE
-	void packLocker(std::string fileName, std::string password, std::string message) {
-		std::ifstream
-			f_old;
-		std::ofstream
-			f_new;
-
-		remove(DUMMY_FILE);
-
-		f_old.open(DUMMY_STUDIO_THIS_EXE, std::ios::binary);
-		f_new.open(DUMMY_FILE, std::ios::binary);
-
-		f_new << f_old.rdbuf();
-
-		f_old.close();
-		f_new.close();
-
-		std::fstream
-			f_file;
-
-		f_file.open(DUMMY_FILE, std::fstream::app);
-
-		f_file << SEARCH_OPENER << sha256(password) << SEARCH_CLOSER;
-		f_file << SEARCH_OPENER << message << SEARCH_CLOSER;
-
-		f_file.close();
-	}
-#endif
