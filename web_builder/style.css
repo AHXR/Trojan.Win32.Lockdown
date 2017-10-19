@@ -1,0 +1,57 @@
+body {
+    background: url(images/bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#centerForm {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;     
+    color: white;
+    
+}
+
+.passwordForm {
+    width: 40em;
+    height: 3em;
+    margin-top: -50px;
+    margin-left: -280px;
+    border-radius: 5px;
+    font-style: italic;
+}
+
+.messageForm {
+    width: 40em;
+    height: 3em;
+    margin-top: 10px;
+    margin-left: -280px;
+    border-radius: 5px;
+    font-style: italic;
+}
+
+.nameForm {
+    width: 40em;
+    height: 3em;
+    font-style: italic;
+    margin-top: 10px;
+    margin-left: -280px;
+    border-radius: 5px;
+}
+
+.buttonForm {
+    width: 30em;
+    height: 2em;
+    margin-top: 20px;
+    margin-left: -240px;
+    border-radius: 5px;
+}
+
+.maskForm {
+    width: 4em;
+    height: 2em;
+    margin-top: 10px;
+    border-radius: 5px;
+}

