@@ -1,9 +1,8 @@
 # AXHR ScreenLock - Screen Lock Builder
 
 <p align="center">
-	<img src="https://i.imgur.com/EqihWFg.png" /> 
-	<br />
 	<img src="https://i.imgur.com/UzyOWNK.png" />
+	[Web Builder](https://i.imgur.com/HQhESds.jpg)[.net Builder](https://i.imgur.com/EqihWFg.png)
 </p>
 
 ---
