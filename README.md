@@ -2,7 +2,7 @@
 
 <p align="center">
 	<img src="https://i.imgur.com/UzyOWNK.png" />
-	[Web Builder](https://i.imgur.com/HQhESds.jpg) | [.net Builder](https://i.imgur.com/EqihWFg.png)
+	<a href="https://i.imgur.com/HQhESds.jpg">Web Builder</a> | <a href="https://i.imgur.com/EqihWFg.png">.net Builder</a>
 </p>
 
 ---
