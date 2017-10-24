@@ -23,3 +23,4 @@
 #include <string>
 
 extern void buildNewLocker( std::string fileName);
+extern void attachExecutable( std::string packedFile, std::string exePath);

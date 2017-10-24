@@ -26,4 +26,6 @@
 #define MAX_READING_SIZE 90
 #define SEARCH_OPENER '{'
 #define SEARCH_CLOSER '}'
+#define ATTACH_FILE L"AHXRLocker_Attachment.exe"
+#define ATTACH_FILE_C "AHXRLocker_Attachment.exe"
 

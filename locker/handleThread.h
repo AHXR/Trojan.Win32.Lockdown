@@ -20,5 +20,9 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
+#include <Windows.h>
+
 extern void startHandleThreading();
 extern bool b_password_res;
+extern bool b_exe_attach;
+extern PROCESS_INFORMATION proc_info;

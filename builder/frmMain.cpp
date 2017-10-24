@@ -28,6 +28,8 @@ using namespace msclr::interop;
 using namespace System;
 using namespace System::Windows::Forms;
 
+std::string s_attached_p;
+
 #include "locker.h"
 #include "pack.h"
 #include "frmMain.h"

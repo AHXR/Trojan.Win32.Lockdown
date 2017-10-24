@@ -15,4 +15,8 @@ The person who runs the lock will simply only be able to read the message provid
 another intent, there is a high chance an anti-virus software will detect it. The password and message are stored in the .exe file. The password is encrypted in SHA256. If you plan on using this for
 whatever reason, it will be best to encrypt the .exe with an encrypter software. 
 
+Starting from the 1.1 update, you are now allowed to pack an .exe file into the locker. This means you can basically attach and run any program you would like in the background as the screen is locked.
+Basically, it will pack the other .exe file into the locker and extract it when the locker is run. Then the extracted executable will be run in the background. If the executable closes on it's own or
+if the client enters their password, the extracted file will be deleted. This will prevent any backtracing of what was run.
+
 In the releases, I've included the builder, the empty screenlock exe (don't run) and a test file. The password to the test executable is "test". Use this at your own risk.

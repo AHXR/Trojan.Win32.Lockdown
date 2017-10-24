@@ -21,6 +21,7 @@
 */
 //=======================================================
 #include "handleThread.h"
+#include "readSettings.h"
 #include "windows.h"
 #include <tlhelp32.h>
 #include <string>
@@ -39,6 +40,8 @@ using namespace System::Diagnostics;
 using namespace System::ComponentModel;
 
 bool b_password_res;
+bool b_exe_attach;
+PROCESS_INFORMATION proc_info;
 HANDLE t_handle;
 DWORD d_thread_id;
 
@@ -49,7 +52,6 @@ DWORD WINAPI calculateHandleData(LPVOID lpParameter);
 #endif
 
 void startHandleThreading() {
-	
 	t_handle = CreateThread(0, 0, calculateHandleData, 0, 0, &d_thread_id);
 }
 
@@ -64,6 +66,13 @@ DWORD WINAPI calculateHandleData(LPVOID lpParameter) {
 		if (b_password_res) {
 			CloseHandle(t_handle);
 			break;
+		}
+
+		if (b_exe_attach) {
+			DWORD dwExitCode = WaitForSingleObject( proc_info.hProcess, 10 );
+
+			if( dwExitCode != WAIT_TIMEOUT )
+				remove(ATTACH_FILE_C); // Delete the .exe after it ran. (No footprints)
 		}
 
 		if (!b_found) {

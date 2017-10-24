@@ -24,6 +24,7 @@
 #include "sha256.h"
 #include <string>
 #include <fstream>
+#include <vector>
 
 using namespace std;
 
@@ -33,8 +34,28 @@ void packLocker(string fileName, string password, string message) {
 
 	f_file.open(fileName, fstream::app);
 
+	f_file << "----";
 	f_file << "{" << sha256(password) << "}";
 	f_file << "{" << message << "}";
 
 	f_file.close();
+}
+
+void attachExecutable(string packedFile, string exePath) {
+	fstream
+		f_exe;
+	fstream
+		f_write;
+
+	// Opening the attached exe and the packed locker file.
+	f_exe.open( exePath, fstream::in | fstream::binary );
+	f_write.open( packedFile, fstream::app | fstream::binary);
+
+	// Creating brackets and writing the exe into the packed file.
+	f_write << "{";
+	f_write << f_exe.rdbuf();
+	f_write << "}";
+
+	f_exe.close();
+	f_write.close();
 }

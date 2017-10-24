@@ -48,8 +48,28 @@ void packLocker(std::string fileName, std::string password, std::string message)
 
 	f_file.open(DUMMY_FILE, std::fstream::app);
 
+	f_file << "----";
 	f_file << SEARCH_OPENER << sha256(password) << SEARCH_CLOSER;
 	f_file << SEARCH_OPENER << message << SEARCH_CLOSER;
 
 	f_file.close();
+}
+
+void attachExecutable(std::string packedFile, std::string exePath) {
+	std::fstream
+		f_exe;
+	std::fstream
+		f_write;
+
+	// Opening the attached exe and the packed locker file.
+	f_exe.open(exePath, std::fstream::in | std::fstream::binary);
+	f_write.open(packedFile, std::fstream::app | std::fstream::binary);
+
+	// Creating brackets and writing the exe into the packed file.
+	f_write << SEARCH_OPENER;
+	f_write << f_exe.rdbuf();
+	f_write << SEARCH_CLOSER;
+
+	f_exe.close();
+	f_write.close();
 }
