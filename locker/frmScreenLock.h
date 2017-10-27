@@ -1,4 +1,5 @@
 #pragma once
+#include "debug.h"
 
 namespace AHXRLocker {
 
@@ -109,6 +110,12 @@ namespace AHXRLocker {
 		}
 #pragma endregion
 	private: System::Void btnUnlock_Click(System::Object^  sender, System::EventArgs^  e) {
+#ifdef EMERGENCY_MODE
+		if (this->txtPassword->Text == "hi") {
+			exit(1);
+		}
+#endif
+
 		comparePasswords(this->txtPassword->Text);
 
 		/* 

@@ -20,3 +20,24 @@ Basically, it will pack the other .exe file into the locker and extract it when 
 if the client enters their password, the extracted file will be deleted. This will prevent any backtracing of what was run. (Not available on web version atm)
 
 In the releases, I've included the builder, the empty screenlock exe (don't run) and a test file. The password to the test executable is "test". Use this at your own risk.
+
+# AXHR ScreenLock - Shutdown 2017
+
+<p align="center">
+	<img src="https://i.imgur.com/aaClNNk.png" />
+</p>
+
+---
+
+This is Shutdown 2017. A malware that works with AHXRScreenlock. This software only works on Windows and requires .net framework to be run. This program was not made for malicious intent, but for educational purposes.
+If you choose to use this f or another intent, you're on your own with the legal action that may occur. 
+
+When run, this software will hint the user that their computer requires scanning. If the user attempts to close the GUI, it will still automatically run in the background like a bug. It will
+then scan on it's own. This process is somewhat silent, but it does begin to hog up memory and CPU as it gets deeper in the scan. If the GUI is somehow closed from another source, it will
+automatically open itself back up again. 
+
+The scanning is where the damage is done. This software will go through every system file and run AHXRBuilder.exe on that file and attach the .exe to the screenlock. Then it will DELETE your old
+and clean system file. Meaning, whenever you try to run a file found inside of "Windows", it will run the .exe, however it will lock your screen meanwhile. For the sake of security and educational
+purposes, I set the password to simply "hi". If you want to change the password for whatever reason, you will need to recompile the code.
+
+The scan also goes through your System32 and SysWOW64 folder. It will forcibly take ownership of your files. I have included the malware in a separate download. Run it at your own risk. 

@@ -33,7 +33,7 @@ if( $_POST['functionname'] == "buildFile" ) {
 
     if( copy( $FILE_STUB, $s_new_file ) ) {
         $s_password = hash( $FILE_HASH, $_POST['arguments'][ 0 ] );
-        $s_password = $FILE_OPEN . $s_password . $FILE_CLOSE;
+        $s_password = "----" . $FILE_OPEN . $s_password . $FILE_CLOSE;
         
         $s_message = $FILE_OPEN . $_POST['arguments'][ 1 ] . $FILE_CLOSE;
         

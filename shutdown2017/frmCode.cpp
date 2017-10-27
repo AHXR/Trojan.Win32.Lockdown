@@ -20,10 +20,5 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#define MAX_PASSWORD_SIZE 16
-#define PASSWORD_HASH_LENGTH 64
-#define SEARCH_OPENER '{'
-#define SEARCH_CLOSER '}'
-#define ATTACH_FILE L"AHXRLocker_Attachment.exe"
-#define ATTACH_FILE_C "AHXRLocker_Attachment.exe"
+#include "frmCode.h"
 

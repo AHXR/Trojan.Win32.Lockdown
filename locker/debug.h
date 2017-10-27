@@ -23,11 +23,12 @@
 #pragma once
 #include <string>
 
-#define DUMMY_FILE "C:\\Users\\Andre\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\Dummy.exe"
-#define DUMMY_STUDIO_THIS_EXE "C:\\Users\\Andre\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\AHXRLocker.exe" 
-#define DUMMY_EXE "C:\\Users\\Andre\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\calc.exe"
+#define DUMMY_FILE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\Dummy.exe"
+#define DUMMY_STUDIO_THIS_EXE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\AHXRLocker.exe" 
+#define DUMMY_EXE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\calc.exe"
 #define DUMMY_PASSWORD "hi"
 #define DUMMY_MESSAGE "Locked out :)"
+#define EMERGENCY_MODE
 
 extern void packLocker(std::string fileName, std::string password, std::string message);
 extern void attachExecutable(std::string packedFile, std::string exePath);
