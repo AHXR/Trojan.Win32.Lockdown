@@ -1,4 +1,4 @@
-# AXHR ScreenLock - Screen Lock Builder
+# AHXR ScreenLock - Screen Lock Builder
 
 <p align="center">
 	<img src="https://i.imgur.com/UzyOWNK.png" />
@@ -21,7 +21,7 @@ if the client enters their password, the extracted file will be deleted. This wi
 
 In the releases, I've included the builder, the empty screenlock exe (don't run) and a test file. The password to the test executable is "test". Use this at your own risk.
 
-# AXHR ScreenLock - Shutdown 2017
+# AHXR ScreenLock - Shutdown 2017
 
 <p align="center">
 	<img src="https://i.imgur.com/aaClNNk.png" />
