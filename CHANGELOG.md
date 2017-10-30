@@ -1,3 +1,8 @@
+1.2.1 (10/30/2017)
+
+- Protocol code added
+- Builder GUI redesigned (https://i.imgur.com/u8iKWTN.png)
+
 1.2 
 
 - Code cleanup

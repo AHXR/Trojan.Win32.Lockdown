@@ -56,17 +56,30 @@ namespace AHXRScreenLock {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::GroupBox^  grpPassword;
+
 	protected:
-	private: System::Windows::Forms::CheckBox^  chkMask;
-	private: System::Windows::Forms::TextBox^  txtPassword;
-	private: System::Windows::Forms::GroupBox^  grpMessage;
+
+
+
 	private: System::Windows::Forms::TextBox^  txtMessage;
 	private: System::Windows::Forms::Button^  btnBuild;
 	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog;
 	private: System::Windows::Forms::ProgressBar^  pgBar;
 	private: System::Windows::Forms::OpenFileDialog^  attachDialog;
 	private: System::Windows::Forms::Button^  btnAttach;
+	private: System::Windows::Forms::Panel^  panel1;
+	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::CheckBox^  chkMask;
+	private: System::Windows::Forms::TextBox^  txtPassword;
+	private: System::Windows::Forms::Panel^  panel2;
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::TextBox^  txtExe;
+	private: System::Windows::Forms::Panel^  panel3;
+	private: System::Windows::Forms::Label^  lblExample;
+	private: bool b_dragging;
+	private: Point p_offset;
 
 
 	private:
@@ -82,77 +95,44 @@ namespace AHXRScreenLock {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->grpPassword = (gcnew System::Windows::Forms::GroupBox());
-			this->chkMask = (gcnew System::Windows::Forms::CheckBox());
-			this->txtPassword = (gcnew System::Windows::Forms::TextBox());
-			this->grpMessage = (gcnew System::Windows::Forms::GroupBox());
 			this->txtMessage = (gcnew System::Windows::Forms::TextBox());
 			this->btnBuild = (gcnew System::Windows::Forms::Button());
 			this->saveFileDialog = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->pgBar = (gcnew System::Windows::Forms::ProgressBar());
 			this->attachDialog = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->btnAttach = (gcnew System::Windows::Forms::Button());
-			this->grpPassword->SuspendLayout();
-			this->grpMessage->SuspendLayout();
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->chkMask = (gcnew System::Windows::Forms::CheckBox());
+			this->txtPassword = (gcnew System::Windows::Forms::TextBox());
+			this->panel2 = (gcnew System::Windows::Forms::Panel());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->txtExe = (gcnew System::Windows::Forms::TextBox());
+			this->panel3 = (gcnew System::Windows::Forms::Panel());
+			this->lblExample = (gcnew System::Windows::Forms::Label());
+			this->panel1->SuspendLayout();
+			this->panel3->SuspendLayout();
 			this->SuspendLayout();
-			// 
-			// grpPassword
-			// 
-			this->grpPassword->Controls->Add(this->chkMask);
-			this->grpPassword->Controls->Add(this->txtPassword);
-			this->grpPassword->Location = System::Drawing::Point(13, 13);
-			this->grpPassword->Name = L"grpPassword";
-			this->grpPassword->Size = System::Drawing::Size(436, 58);
-			this->grpPassword->TabIndex = 0;
-			this->grpPassword->TabStop = false;
-			this->grpPassword->Text = L"Password";
-			// 
-			// chkMask
-			// 
-			this->chkMask->AutoSize = true;
-			this->chkMask->Checked = true;
-			this->chkMask->CheckState = System::Windows::Forms::CheckState::Checked;
-			this->chkMask->Location = System::Drawing::Point(381, 22);
-			this->chkMask->Name = L"chkMask";
-			this->chkMask->Size = System::Drawing::Size(49, 17);
-			this->chkMask->TabIndex = 2;
-			this->chkMask->Text = L"Mask";
-			this->chkMask->UseVisualStyleBackColor = true;
-			this->chkMask->CheckedChanged += gcnew System::EventHandler(this, &frmMain::chkMask_CheckedChanged);
-			// 
-			// txtPassword
-			// 
-			this->txtPassword->Location = System::Drawing::Point(6, 20);
-			this->txtPassword->MaxLength = 16;
-			this->txtPassword->Name = L"txtPassword";
-			this->txtPassword->Size = System::Drawing::Size(369, 20);
-			this->txtPassword->TabIndex = 1;
-			this->txtPassword->UseSystemPasswordChar = true;
-			// 
-			// grpMessage
-			// 
-			this->grpMessage->Controls->Add(this->txtMessage);
-			this->grpMessage->Location = System::Drawing::Point(13, 77);
-			this->grpMessage->Name = L"grpMessage";
-			this->grpMessage->Size = System::Drawing::Size(436, 54);
-			this->grpMessage->TabIndex = 1;
-			this->grpMessage->TabStop = false;
-			this->grpMessage->Text = L"Message";
 			// 
 			// txtMessage
 			// 
-			this->txtMessage->Location = System::Drawing::Point(6, 19);
+			this->txtMessage->Location = System::Drawing::Point(13, 104);
 			this->txtMessage->MaxLength = 20;
 			this->txtMessage->Multiline = true;
 			this->txtMessage->Name = L"txtMessage";
-			this->txtMessage->Size = System::Drawing::Size(424, 22);
+			this->txtMessage->Size = System::Drawing::Size(220, 22);
 			this->txtMessage->TabIndex = 3;
+			this->txtMessage->TextChanged += gcnew System::EventHandler(this, &frmMain::txtMessage_TextChanged);
 			// 
 			// btnBuild
 			// 
-			this->btnBuild->Location = System::Drawing::Point(13, 137);
+			this->btnBuild->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9));
+			this->btnBuild->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->btnBuild->Location = System::Drawing::Point(11, 363);
 			this->btnBuild->Name = L"btnBuild";
-			this->btnBuild->Size = System::Drawing::Size(332, 23);
+			this->btnBuild->Size = System::Drawing::Size(135, 42);
 			this->btnBuild->TabIndex = 2;
 			this->btnBuild->Text = L"Build";
 			this->btnBuild->UseVisualStyleBackColor = true;
@@ -166,9 +146,9 @@ namespace AHXRScreenLock {
 			// 
 			// pgBar
 			// 
-			this->pgBar->Location = System::Drawing::Point(14, 166);
+			this->pgBar->Location = System::Drawing::Point(152, 363);
 			this->pgBar->Name = L"pgBar";
-			this->pgBar->Size = System::Drawing::Size(436, 23);
+			this->pgBar->Size = System::Drawing::Size(298, 42);
 			this->pgBar->TabIndex = 3;
 			// 
 			// attachDialog
@@ -179,42 +159,204 @@ namespace AHXRScreenLock {
 			// 
 			// btnAttach
 			// 
-			this->btnAttach->Location = System::Drawing::Point(351, 137);
+			this->btnAttach->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9));
+			this->btnAttach->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->btnAttach->Location = System::Drawing::Point(315, 60);
 			this->btnAttach->Name = L"btnAttach";
-			this->btnAttach->Size = System::Drawing::Size(92, 23);
+			this->btnAttach->Size = System::Drawing::Size(79, 43);
 			this->btnAttach->TabIndex = 4;
-			this->btnAttach->Text = L"Attach .exe";
+			this->btnAttach->Text = L"ATTACH";
 			this->btnAttach->UseVisualStyleBackColor = true;
 			this->btnAttach->Click += gcnew System::EventHandler(this, &frmMain::btnAttach_Click);
+			// 
+			// panel1
+			// 
+			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(20)), static_cast<System::Int32>(static_cast<System::Byte>(20)),
+				static_cast<System::Int32>(static_cast<System::Byte>(20)));
+			this->panel1->Controls->Add(this->label1);
+			this->panel1->Location = System::Drawing::Point(-9, -30);
+			this->panel1->Name = L"panel1";
+			this->panel1->Size = System::Drawing::Size(491, 62);
+			this->panel1->TabIndex = 5;
+			this->panel1->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &frmMain::panel1_MouseDown);
+			this->panel1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &frmMain::panel1_MouseMove);
+			this->panel1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &frmMain::panel1_MouseUp);
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label1->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->label1->Location = System::Drawing::Point(16, 35);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(280, 22);
+			this->label1->TabIndex = 0;
+			this->label1->Text = L"AHXRScreenLock - ScreenLock Builder";
+			this->label1->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &frmMain::panel1_MouseDown);
+			this->label1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &frmMain::panel1_MouseMove);
+			this->label1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &frmMain::panel1_MouseUp);
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label2->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->label2->Location = System::Drawing::Point(12, 39);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(164, 18);
+			this->label2->TabIndex = 8;
+			this->label2->Text = L"PASSWORD (16 CHARACTERS)";
+			// 
+			// chkMask
+			// 
+			this->chkMask->AutoSize = true;
+			this->chkMask->Checked = true;
+			this->chkMask->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->chkMask->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9));
+			this->chkMask->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->chkMask->Location = System::Drawing::Point(182, 38);
+			this->chkMask->Name = L"chkMask";
+			this->chkMask->Size = System::Drawing::Size(51, 22);
+			this->chkMask->TabIndex = 7;
+			this->chkMask->Text = L"Mask";
+			this->chkMask->UseVisualStyleBackColor = true;
+			this->chkMask->CheckedChanged += gcnew System::EventHandler(this, &frmMain::chkMask_CheckedChanged_1);
+			// 
+			// txtPassword
+			// 
+			this->txtPassword->Location = System::Drawing::Point(15, 60);
+			this->txtPassword->MaxLength = 16;
+			this->txtPassword->Name = L"txtPassword";
+			this->txtPassword->Size = System::Drawing::Size(218, 20);
+			this->txtPassword->TabIndex = 6;
+			this->txtPassword->UseSystemPasswordChar = true;
+			// 
+			// panel2
+			// 
+			this->panel2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(10)), static_cast<System::Int32>(static_cast<System::Byte>(10)),
+				static_cast<System::Int32>(static_cast<System::Byte>(10)));
+			this->panel2->Location = System::Drawing::Point(-17, 26);
+			this->panel2->Name = L"panel2";
+			this->panel2->Size = System::Drawing::Size(507, 10);
+			this->panel2->TabIndex = 9;
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label3->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->label3->Location = System::Drawing::Point(12, 83);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(154, 18);
+			this->label3->TabIndex = 10;
+			this->label3->Text = L"MESSAGE (20 CHARACTERS)";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label4->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->label4->Location = System::Drawing::Point(304, 39);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(103, 18);
+			this->label4->TabIndex = 11;
+			this->label4->Text = L"ATTACH .EXE FILE";
+			// 
+			// txtExe
+			// 
+			this->txtExe->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9));
+			this->txtExe->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->txtExe->Location = System::Drawing::Point(259, 104);
+			this->txtExe->Multiline = true;
+			this->txtExe->Name = L"txtExe";
+			this->txtExe->ReadOnly = true;
+			this->txtExe->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
+			this->txtExe->Size = System::Drawing::Size(191, 22);
+			this->txtExe->TabIndex = 12;
+			this->txtExe->Text = L"NO EXECUTABLE ATTACHED";
+			this->txtExe->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			// 
+			// panel3
+			// 
+			this->panel3->BackColor = System::Drawing::Color::Black;
+			this->panel3->Controls->Add(this->lblExample);
+			this->panel3->Location = System::Drawing::Point(13, 132);
+			this->panel3->Name = L"panel3";
+			this->panel3->Size = System::Drawing::Size(437, 225);
+			this->panel3->TabIndex = 13;
+			// 
+			// lblExample
+			// 
+			this->lblExample->AutoSize = true;
+			this->lblExample->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lblExample->ForeColor = System::Drawing::Color::White;
+			this->lblExample->Location = System::Drawing::Point(157, 95);
+			this->lblExample->Name = L"lblExample";
+			this->lblExample->Size = System::Drawing::Size(0, 18);
+			this->lblExample->TabIndex = 0;
 			// 
 			// frmMain
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(461, 204);
+			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(35)), static_cast<System::Int32>(static_cast<System::Byte>(35)),
+				static_cast<System::Int32>(static_cast<System::Byte>(35)));
+			this->ClientSize = System::Drawing::Size(463, 418);
+			this->Controls->Add(this->panel3);
+			this->Controls->Add(this->txtExe);
+			this->Controls->Add(this->label4);
+			this->Controls->Add(this->txtMessage);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->panel1);
+			this->Controls->Add(this->panel2);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->chkMask);
+			this->Controls->Add(this->txtPassword);
 			this->Controls->Add(this->btnAttach);
 			this->Controls->Add(this->pgBar);
 			this->Controls->Add(this->btnBuild);
-			this->Controls->Add(this->grpMessage);
-			this->Controls->Add(this->grpPassword);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->MaximizeBox = false;
-			this->MaximumSize = System::Drawing::Size(469, 232);
-			this->MinimumSize = System::Drawing::Size(469, 232);
 			this->Name = L"frmMain";
 			this->Text = L"AXHRScreenLock";
-			this->grpPassword->ResumeLayout(false);
-			this->grpPassword->PerformLayout();
-			this->grpMessage->ResumeLayout(false);
-			this->grpMessage->PerformLayout();
+			this->panel1->ResumeLayout(false);
+			this->panel1->PerformLayout();
+			this->panel3->ResumeLayout(false);
+			this->panel3->PerformLayout();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void chkMask_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
-		this->txtPassword->UseSystemPasswordChar = this->chkMask->Checked;
-	}
 	private: System::Void btnBuild_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->saveFileDialog->ShowDialog();
+
+		std::string
+			s_msg = marshal_as< std::string >(this->txtMessage->Text),
+			s_pw = marshal_as< std::string >(this->txtPassword->Text);
+
+		bool
+			b_check;
+
+		if (s_msg.find("----") != std::string::npos || s_msg.find("{") != std::string::npos || s_msg.find("}") != std::string::npos) {
+			MessageBox::Show("Illegal characters.");
+			b_check = true;
+		}
+		if (s_msg.length() <= 0) {
+			MessageBox::Show("Please enter a message.");
+			b_check = true;
+		}
+		if (s_pw.length() <= 0) {
+			MessageBox::Show("Please enter a password.");
+			b_check = true;
+		}
+
+		if(!b_check)
+			this->saveFileDialog->ShowDialog();
 	}
 	private: System::Void saveFileDialog_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 
@@ -239,6 +381,26 @@ private: System::Void btnAttach_Click(System::Object^  sender, System::EventArgs
 }
 private: System::Void attachDialog_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e) {
 	s_attached_p = marshal_as< std::string >(this->attachDialog->FileName);
+	this->txtExe->Text = this->attachDialog->FileName->Substring(this->attachDialog->FileName->LastIndexOf(L"\\")+1);
+}
+private: System::Void txtMessage_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->lblExample->Text = this->txtMessage->Text;
+}
+private: System::Void chkMask_CheckedChanged_1(System::Object^  sender, System::EventArgs^  e) {
+	this->txtPassword->UseSystemPasswordChar = this->chkMask->Checked;
+}
+private: System::Void panel1_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+	this->b_dragging = true;
+	this->p_offset = Point(e->X, e->Y);
+}
+private: System::Void panel1_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+	if (this->b_dragging) {
+		Point p_current = PointToScreen(e->Location);
+		Location = Point(p_current.X - this->p_offset.X, p_current.Y - this->p_offset.Y);
+	}
+}
+private: System::Void panel1_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+	this->b_dragging = false;
 }
 };
 }
