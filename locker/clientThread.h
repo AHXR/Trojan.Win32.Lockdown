@@ -20,16 +20,8 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#pragma once
-#include <string>
-
-#define DUMMY_FILE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\Dummy.exe"
-#define DUMMY_STUDIO_THIS_EXE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\AHXRLocker.exe" 
-#define DUMMY_EXE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\calc.exe"
-#define DUMMY_PASSWORD "hi"
-#define DUMMY_MESSAGE "Locked out :)"
-#define EMERGENCY_MODE
-
-extern void packLocker(std::string fileName, std::string password, std::string message);
-extern void packLocker(std::string fileName, std::string password, std::string message, std::string address);
-extern void attachExecutable(std::string packedFile, std::string exePath);
+extern void sendNewMessage(char * message);
+extern void startClientThread();
+extern bool isClientReady();
+extern void setHostAddress(char * addr);
+extern SOCKET ConnectSocket;

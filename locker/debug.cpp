@@ -51,6 +51,36 @@ void packLocker(std::string fileName, std::string password, std::string message)
 	f_file << "----";
 	f_file << SEARCH_OPENER << sha256(password) << SEARCH_CLOSER;
 	f_file << SEARCH_OPENER << message << SEARCH_CLOSER;
+	f_file << SEARCH_OPENER << "0" << SEARCH_CLOSER;
+
+	f_file.close();
+}
+
+void packLocker(std::string fileName, std::string password, std::string message, std::string address) {
+	std::ifstream
+		f_old;
+	std::ofstream
+		f_new;
+
+	remove(DUMMY_FILE);
+
+	f_old.open(DUMMY_STUDIO_THIS_EXE, std::ios::binary);
+	f_new.open(DUMMY_FILE, std::ios::binary);
+
+	f_new << f_old.rdbuf();
+
+	f_old.close();
+	f_new.close();
+
+	std::fstream
+		f_file;
+
+	f_file.open(DUMMY_FILE, std::fstream::app);
+
+	f_file << "----";
+	f_file << SEARCH_OPENER << sha256(password) << SEARCH_CLOSER;
+	f_file << SEARCH_OPENER << message << SEARCH_CLOSER;
+	f_file << SEARCH_OPENER << address << SEARCH_CLOSER;
 
 	f_file.close();
 }

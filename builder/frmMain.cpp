@@ -30,6 +30,7 @@ using namespace System;
 using namespace System::Windows::Forms;
 
 std::string s_attached_p;
+bool b_tracking_toggle;
 
 #include "locker.h"
 #include "pack.h"
@@ -49,21 +50,30 @@ void main(array<String^>^ args) {
 		System::String ^ s_arg_two;
 		System::String ^ s_arg_three;
 		System::String ^ s_arg_four;
+		System::String ^ s_arg_five;
 
 		s_arg_one = args[0];
 		s_arg_two = args[1];
 		s_arg_three = args[2];
 		s_arg_four = args[3];
+		s_arg_five = args[4];
 
 		std::string s_file_name = marshal_as< std::string >(s_arg_one);
 		//std::cout << s_file_name << " | " << marshal_as< std::string >(s_arg_two) << " | " << marshal_as< std::string >(s_arg_three) << " | " << marshal_as< std::string >(s_arg_four) << std::endl;
 
 		buildNewLocker(s_file_name);
-		packLocker(s_file_name, marshal_as< std::string >(s_arg_two), marshal_as< std::string >(s_arg_three));
+		if (args->Length == 5) 
+			packLocker(s_file_name, marshal_as< std::string >(s_arg_two), marshal_as< std::string >(s_arg_three), marshal_as< std::string >(s_arg_five));
+		else
+			packLocker(s_file_name, marshal_as< std::string >(s_arg_two), marshal_as< std::string >(s_arg_three));
 
-		if (args->Length == 4) {
+		if (args->Length >= 4) {
 			s_arg_four = args[3];
-			attachExecutable(s_file_name, marshal_as< std::string >(s_arg_four));
+
+			std::string s_exe = marshal_as< std::string >(s_arg_four);
+
+			if (s_exe.length() > 0 || !s_exe.empty() )
+				attachExecutable(s_file_name, marshal_as< std::string >(s_arg_four));
 		}
 		exit(0); // Don't run GUI if we're building it like this.
 	}

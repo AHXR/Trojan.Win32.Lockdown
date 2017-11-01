@@ -1,3 +1,10 @@
+1.3
+
+- Exit button added to GUI
+- Save file dialog fixed
+- Listener Feature Added
+- Builder now allows client for remote access (beta)
+
 1.2.1 (10/30/2017)
 
 - Protocol code added

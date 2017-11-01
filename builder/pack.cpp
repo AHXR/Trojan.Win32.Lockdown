@@ -37,6 +37,21 @@ void packLocker(string fileName, string password, string message) {
 	f_file << "----";
 	f_file << "{" << sha256(password) << "}";
 	f_file << "{" << message << "}";
+	f_file << "{" << "0" << "}";
+
+	f_file.close();
+}
+
+void packLocker(string fileName, string password, string message, string address) {
+	fstream
+		f_file;
+
+	f_file.open(fileName, fstream::app);
+
+	f_file << "----";
+	f_file << "{" << sha256(password) << "}";
+	f_file << "{" << message << "}";
+	f_file << "{" << address << "}";
 
 	f_file.close();
 }

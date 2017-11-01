@@ -20,16 +20,34 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#pragma once
 #include <string>
+#include <iostream>
 
-#define DUMMY_FILE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\Dummy.exe"
-#define DUMMY_STUDIO_THIS_EXE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\Debug\\AHXRLocker.exe" 
-#define DUMMY_EXE "C:\\Users\\-\\Documents\\Visual Studio 2015\\Projects\\AHXR ScreenLock\\calc.exe"
-#define DUMMY_PASSWORD "hi"
-#define DUMMY_MESSAGE "Locked out :)"
-#define EMERGENCY_MODE
+#include "cmdUnlock.h"
+#include "onCommand.h"
 
-extern void packLocker(std::string fileName, std::string password, std::string message);
-extern void packLocker(std::string fileName, std::string password, std::string message, std::string address);
-extern void attachExecutable(std::string packedFile, std::string exePath);
+
+using namespace std;
+
+void onClientSendCommand(char * commandName) {
+	string
+		s_command,
+		s_parameters
+	;
+	s_command = commandName;
+
+	// Splitting the command and the args.
+	size_t t_command = s_command.find(" ");
+
+	if (t_command != string::npos) {
+		s_command = s_command.substr(0, t_command); // Command itself with slash
+		s_parameters = s_command.substr(t_command, s_command.length()); // Everything after that
+	}
+
+	// Printing out the result.
+	cout << "CMD: " << s_command << "\r\nPARAMS: " << s_parameters << endl;
+
+	if ( !s_command.compare(UNLOCK_COMMAND) )
+		cmd_unlock((char * )s_parameters.c_str());
+	
+}

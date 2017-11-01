@@ -22,6 +22,8 @@
 //=========================================
 #pragma once
 
+#include "frmAbout.h"
+
 namespace AHXRScreenLock {
 
 	using namespace System;
@@ -80,6 +82,12 @@ namespace AHXRScreenLock {
 	private: System::Windows::Forms::Label^  lblExample;
 	private: bool b_dragging;
 	private: Point p_offset;
+	private: System::Windows::Forms::Label^  btnExit;
+	private: System::Windows::Forms::Label^  btnAbout;
+	private: System::Windows::Forms::Label^  btnUpdate;
+	private: System::Windows::Forms::Label^  label5;
+	private: System::Windows::Forms::Button^  btnTracking;
+	private: System::Windows::Forms::TextBox^  txtHost;
 
 
 	private:
@@ -102,6 +110,9 @@ namespace AHXRScreenLock {
 			this->attachDialog = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->btnAttach = (gcnew System::Windows::Forms::Button());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->btnUpdate = (gcnew System::Windows::Forms::Label());
+			this->btnAbout = (gcnew System::Windows::Forms::Label());
+			this->btnExit = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->chkMask = (gcnew System::Windows::Forms::CheckBox());
@@ -112,6 +123,9 @@ namespace AHXRScreenLock {
 			this->txtExe = (gcnew System::Windows::Forms::TextBox());
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
 			this->lblExample = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->btnTracking = (gcnew System::Windows::Forms::Button());
+			this->txtHost = (gcnew System::Windows::Forms::TextBox());
 			this->panel1->SuspendLayout();
 			this->panel3->SuspendLayout();
 			this->SuspendLayout();
@@ -161,9 +175,9 @@ namespace AHXRScreenLock {
 			// 
 			this->btnAttach->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9));
 			this->btnAttach->ForeColor = System::Drawing::Color::DodgerBlue;
-			this->btnAttach->Location = System::Drawing::Point(315, 60);
+			this->btnAttach->Location = System::Drawing::Point(259, 60);
 			this->btnAttach->Name = L"btnAttach";
-			this->btnAttach->Size = System::Drawing::Size(79, 43);
+			this->btnAttach->Size = System::Drawing::Size(100, 38);
 			this->btnAttach->TabIndex = 4;
 			this->btnAttach->Text = L"ATTACH";
 			this->btnAttach->UseVisualStyleBackColor = true;
@@ -173,6 +187,9 @@ namespace AHXRScreenLock {
 			// 
 			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(20)), static_cast<System::Int32>(static_cast<System::Byte>(20)),
 				static_cast<System::Int32>(static_cast<System::Byte>(20)));
+			this->panel1->Controls->Add(this->btnUpdate);
+			this->panel1->Controls->Add(this->btnAbout);
+			this->panel1->Controls->Add(this->btnExit);
 			this->panel1->Controls->Add(this->label1);
 			this->panel1->Location = System::Drawing::Point(-9, -30);
 			this->panel1->Name = L"panel1";
@@ -181,6 +198,52 @@ namespace AHXRScreenLock {
 			this->panel1->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &frmMain::panel1_MouseDown);
 			this->panel1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &frmMain::panel1_MouseMove);
 			this->panel1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &frmMain::panel1_MouseUp);
+			// 
+			// btnUpdate
+			// 
+			this->btnUpdate->AutoSize = true;
+			this->btnUpdate->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnUpdate->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->btnUpdate->Location = System::Drawing::Point(364, 35);
+			this->btnUpdate->Name = L"btnUpdate";
+			this->btnUpdate->Size = System::Drawing::Size(32, 22);
+			this->btnUpdate->TabIndex = 3;
+			this->btnUpdate->Text = L"1.3";
+			this->btnUpdate->Click += gcnew System::EventHandler(this, &frmMain::btnUpdate_Click);
+			this->btnUpdate->MouseEnter += gcnew System::EventHandler(this, &frmMain::btnUpdate_MouseEnter);
+			this->btnUpdate->MouseLeave += gcnew System::EventHandler(this, &frmMain::btnUpdate_MouseLeave);
+			// 
+			// btnAbout
+			// 
+			this->btnAbout->AutoSize = true;
+			this->btnAbout->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnAbout->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->btnAbout->Location = System::Drawing::Point(416, 35);
+			this->btnAbout->Name = L"btnAbout";
+			this->btnAbout->Size = System::Drawing::Size(19, 22);
+			this->btnAbout->TabIndex = 2;
+			this->btnAbout->Text = L"A";
+			this->btnAbout->Click += gcnew System::EventHandler(this, &frmMain::btnAbout_Click);
+			this->btnAbout->MouseEnter += gcnew System::EventHandler(this, &frmMain::btnAbout_MouseEnter);
+			this->btnAbout->MouseLeave += gcnew System::EventHandler(this, &frmMain::btnAbout_MouseLeave);
+			// 
+			// btnExit
+			// 
+			this->btnExit->AutoSize = true;
+			this->btnExit->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnExit->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->btnExit->Location = System::Drawing::Point(441, 35);
+			this->btnExit->Name = L"btnExit";
+			this->btnExit->Size = System::Drawing::Size(19, 22);
+			this->btnExit->TabIndex = 1;
+			this->btnExit->Text = L"X";
+			this->btnExit->Click += gcnew System::EventHandler(this, &frmMain::btnExit_Click);
+			this->btnExit->MouseEnter += gcnew System::EventHandler(this, &frmMain::btnExit_MouseEnter);
+			this->btnExit->MouseLeave += gcnew System::EventHandler(this, &frmMain::btnExit_MouseLeave);
+			this->btnExit->MouseHover += gcnew System::EventHandler(this, &frmMain::btnExit_MouseHover);
 			// 
 			// label1
 			// 
@@ -260,7 +323,7 @@ namespace AHXRScreenLock {
 			this->label4->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label4->ForeColor = System::Drawing::Color::DodgerBlue;
-			this->label4->Location = System::Drawing::Point(304, 39);
+			this->label4->Location = System::Drawing::Point(259, 39);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(103, 18);
 			this->label4->TabIndex = 11;
@@ -275,7 +338,7 @@ namespace AHXRScreenLock {
 			this->txtExe->Name = L"txtExe";
 			this->txtExe->ReadOnly = true;
 			this->txtExe->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
-			this->txtExe->Size = System::Drawing::Size(191, 22);
+			this->txtExe->Size = System::Drawing::Size(100, 22);
 			this->txtExe->TabIndex = 12;
 			this->txtExe->Text = L"NO EXECUTABLE ATTACHED";
 			this->txtExe->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
@@ -300,6 +363,43 @@ namespace AHXRScreenLock {
 			this->lblExample->Size = System::Drawing::Size(0, 18);
 			this->lblExample->TabIndex = 0;
 			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label5->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->label5->Location = System::Drawing::Point(384, 39);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(62, 18);
+			this->label5->TabIndex = 14;
+			this->label5->Text = L"TRACKING";
+			// 
+			// btnTracking
+			// 
+			this->btnTracking->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9));
+			this->btnTracking->ForeColor = System::Drawing::Color::Red;
+			this->btnTracking->Location = System::Drawing::Point(376, 60);
+			this->btnTracking->Name = L"btnTracking";
+			this->btnTracking->Size = System::Drawing::Size(75, 38);
+			this->btnTracking->TabIndex = 15;
+			this->btnTracking->Text = L"OFF";
+			this->btnTracking->UseVisualStyleBackColor = true;
+			this->btnTracking->Click += gcnew System::EventHandler(this, &frmMain::btnTracking_Click);
+			// 
+			// txtHost
+			// 
+			this->txtHost->Font = (gcnew System::Drawing::Font(L"Trebuchet MS", 9));
+			this->txtHost->ForeColor = System::Drawing::Color::DodgerBlue;
+			this->txtHost->Location = System::Drawing::Point(376, 104);
+			this->txtHost->Multiline = true;
+			this->txtHost->Name = L"txtHost";
+			this->txtHost->ScrollBars = System::Windows::Forms::ScrollBars::Horizontal;
+			this->txtHost->Size = System::Drawing::Size(75, 22);
+			this->txtHost->TabIndex = 16;
+			this->txtHost->Text = L"127.0.0.1";
+			this->txtHost->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			// 
 			// frmMain
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -307,6 +407,9 @@ namespace AHXRScreenLock {
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(35)), static_cast<System::Int32>(static_cast<System::Byte>(35)),
 				static_cast<System::Int32>(static_cast<System::Byte>(35)));
 			this->ClientSize = System::Drawing::Size(463, 418);
+			this->Controls->Add(this->txtHost);
+			this->Controls->Add(this->btnTracking);
+			this->Controls->Add(this->label5);
 			this->Controls->Add(this->panel3);
 			this->Controls->Add(this->txtExe);
 			this->Controls->Add(this->label4);
@@ -340,7 +443,7 @@ namespace AHXRScreenLock {
 			s_pw = marshal_as< std::string >(this->txtPassword->Text);
 
 		bool
-			b_check;
+			b_check = false;
 
 		if (s_msg.find("----") != std::string::npos || s_msg.find("{") != std::string::npos || s_msg.find("}") != std::string::npos) {
 			MessageBox::Show("Illegal characters.");
@@ -366,11 +469,16 @@ namespace AHXRScreenLock {
 		this->pgBar->Value = 25;
 		buildNewLocker(s_file);
 		this->pgBar->Value = 65;
-		packLocker(s_file, marshal_as< std::string >(this->txtPassword->Text), marshal_as< std::string >(this->txtMessage->Text));
+		if (b_tracking_toggle) 
+			packLocker(s_file, marshal_as< std::string >(this->txtPassword->Text), marshal_as< std::string >(this->txtMessage->Text), marshal_as< std::string >(this->txtHost->Text));
+		else 
+			packLocker(s_file, marshal_as< std::string >(this->txtPassword->Text), marshal_as< std::string >(this->txtMessage->Text));
 		this->pgBar->Value = 80;
 		if ( !s_attached_p.empty() ) {
 			attachExecutable(s_file, s_attached_p);
 		}
+
+		
 
 		this->pgBar->Value = 100;
 
@@ -401,6 +509,51 @@ private: System::Void panel1_MouseMove(System::Object^  sender, System::Windows:
 }
 private: System::Void panel1_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
 	this->b_dragging = false;
+}
+private: System::Void btnExit_MouseHover(System::Object^  sender, System::EventArgs^  e) {
+	this->btnExit->ForeColor = System::Drawing::Color::White;
+}
+private: System::Void btnExit_MouseLeave(System::Object^  sender, System::EventArgs^  e) {
+	this->btnExit->ForeColor = System::Drawing::Color::DodgerBlue;
+}
+private: System::Void btnExit_Click(System::Object^  sender, System::EventArgs^  e) {
+	Application::Exit();
+}
+private: System::Void btnAbout_MouseEnter(System::Object^  sender, System::EventArgs^  e) {
+	this->btnAbout->ForeColor = System::Drawing::Color::White;
+}
+private: System::Void btnExit_MouseEnter(System::Object^  sender, System::EventArgs^  e) {
+	this->btnExit->ForeColor = System::Drawing::Color::White;
+}
+private: System::Void btnAbout_MouseLeave(System::Object^  sender, System::EventArgs^  e) {
+	this->btnAbout->ForeColor = System::Drawing::Color::DodgerBlue;
+}
+private: System::Void btnAbout_Click(System::Object^  sender, System::EventArgs^  e) {
+	AHXRScreenLock::frmAbout frm;
+	frm.ShowDialog();
+}
+private: System::Void btnUpdate_MouseEnter(System::Object^  sender, System::EventArgs^  e) {
+	this->btnUpdate->ForeColor = System::Drawing::Color::White;
+}
+private: System::Void btnUpdate_MouseLeave(System::Object^  sender, System::EventArgs^  e) {
+	this->btnUpdate->ForeColor = System::Drawing::Color::DodgerBlue;
+}
+private: System::Void btnUpdate_Click(System::Object^  sender, System::EventArgs^  e) {
+
+}
+
+private: System::Void btnTracking_Click(System::Object^  sender, System::EventArgs^  e) {
+	
+	if (b_tracking_toggle) {
+		this->btnTracking->Text = "OFF";
+		this->btnTracking->ForeColor = System::Drawing::Color::Red;
+	}
+	else {
+		MessageBox::Show("Warning: Unauthorized remote access to another computer is considered illegal in most cases. By toggling this on, you agree and take full responsbility for your actions.");
+		this->btnTracking->Text = "ON";
+		this->btnTracking->ForeColor = System::Drawing::Color::Green;
+	}
+	b_tracking_toggle = !b_tracking_toggle;
 }
 };
 }

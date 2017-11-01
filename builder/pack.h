@@ -24,3 +24,4 @@
 #define LOCKER_FILE_NAME "AHXRLocker.exe"
 
 extern void packLocker(std::string fileName, std::string password, std::string message);
+extern void packLocker(std::string fileName, std::string password, std::string message, std::string address);
