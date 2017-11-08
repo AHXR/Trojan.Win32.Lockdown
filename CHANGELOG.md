@@ -1,4 +1,12 @@
-1.3
+1.4 (11/7/2017)
+
+- Project renamed to Trojan.Win32.Lockdown
+- Now blocks cmd.exe
+- Shutdown 2017 no longer has dependencies
+- Shutdown 2017 runs builder and lockdown internally.
+- Minor bug fixes
+
+1.3 (11/1/2017)
 
 - Exit button added to GUI
 - Save file dialog fixed

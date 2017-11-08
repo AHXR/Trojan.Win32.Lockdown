@@ -20,11 +20,15 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#include <string>
+//#define DEBUG_MODE
 
-#define SHUTDOWN_EXT ".sd"
-#define SHUTDOWN_PW "hi"
-#define SHUTDOWN_MSG "SHUTDOWN PROTECTION"
+#define ARG_FILE_NAME 0
+#define ARG_PASSWORD 1
+#define ARG_MESSAGE 2
+#define ARG_EXE 3
+#define ARG_ADDRESS 4
 
-extern void lockdownFile(std::string fileName);
-extern bool isFileLocked(std::string fileName);
+#define PACK_SPLITTER "----"
+#define PACK_OPENER "{"
+#define PACK_CLOSER "}"
+#define PACK_ADDRESS_DEF "0"

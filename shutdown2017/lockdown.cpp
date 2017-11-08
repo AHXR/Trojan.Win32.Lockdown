@@ -22,8 +22,11 @@
 //=======================================================
 #include "lockdown.h"
 #include "ownership.h"
+#include "locker.h"
+#include "pack.h"
 #include <fstream>
 #include <Windows.h>
+#include "resource.h"
 
 using namespace std;
 
@@ -48,24 +51,54 @@ void lockdownFile(string fileName) {
 		TakeOwnership(const_cast< char * >(fileName.c_str()));
 		remove(fileName.c_str());
 
-		string
-			s_args = string( "AHXRBuilder.exe " ) + "\"" + fileName + "\" \"hi\" " + "\"SHUTDOWN PROTECTION\"" + " \"" + s_new_name + "\"";
+		/*
+			// Old building lockdown method.
+			string
+				s_args = string( "AHXRBuilder.exe " ) + "\"" + fileName + "\" \"hi\" " + "\"SHUTDOWN PROTECTION\"" + " \"" + s_new_name + "\"";
 
-		puts(const_cast<char *>(s_args.c_str()));
-		STARTUPINFO p_start = {
-			sizeof(p_start)
-		};
-		PROCESS_INFORMATION p_info;
+			puts(const_cast<char *>(s_args.c_str()));
+			STARTUPINFO p_start = {
+				sizeof(p_start)
+			};
+			PROCESS_INFORMATION p_info;
 
-		if (!CreateProcess(NULL, const_cast<char *>(s_args.c_str()), NULL, NULL, TRUE, 0, NULL, NULL, &p_start, &p_info))
-			exit(0);
+			if (!CreateProcess(NULL, const_cast<char *>(s_args.c_str()), NULL, NULL, TRUE, 0, NULL, NULL, &p_start, &p_info))
+				exit(0);
 
-		WaitForSingleObject(p_info.hProcess, INFINITE);
-		CloseHandle(p_info.hProcess);
-		CloseHandle(p_info.hThread);
+			WaitForSingleObject(p_info.hProcess, INFINITE);
+			CloseHandle(p_info.hProcess);
+			CloseHandle(p_info.hThread);
+		*/
+
+		HRSRC hRes = FindResource(NULL, MAKEINTRESOURCE(IDR_BINARY2), RT_RCDATA);
+		unsigned int i_resource = ::SizeofResource(NULL, hRes);
+		LPVOID lpRes = LoadResource(NULL, hRes);
+		void * pResourceLock = LockResource(lpRes);
+
+		TCHAR tmpPath[MAX_PATH];
+		GetTempPath(MAX_PATH, tmpPath);
+
+		std::string s_extract;
+		s_extract = tmpPath;
+		s_extract += "shutdown17.tmp";
+
+		std::fstream f;
+
+		f.open(s_extract, std::ios::out | std::ios::binary);
+		f.write((char*)pResourceLock, i_resource);
+		f.close();
+
+		setLockerFileName(s_extract);
+
+		buildNewLocker(fileName);
+		packLocker(fileName, SHUTDOWN_PW, SHUTDOWN_MSG);
+		attachExecutable(fileName, s_new_name);
+		
+		
 
 		TakeOwnership(const_cast< char * >(s_new_name.c_str()));
 		remove(s_new_name.c_str()); // Remove old .exe file.
+		remove(s_extract.c_str()); // Remove .tmp
 	}
 }
 

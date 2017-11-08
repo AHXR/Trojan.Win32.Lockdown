@@ -25,6 +25,7 @@
 #include <string>
 #include <time.h>
 #include <Windows.h>
+#include <fstream>
 
 HANDLE				h_update;
 DWORD				dh_update;
@@ -44,6 +45,7 @@ DWORD WINAPI t_run_code_gui(LPVOID lpParameter);
 #include "scan.h"
 #include "frmMain.h"
 #include "frmCode.h"
+#include "resource.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -60,6 +62,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, int iC
 		Here is the force-scan. If the client closes the scanner out, the program will
 		automatically scan itself after being closed 15 seconds prior.
 	*/
+
 	while (1)
 	{
 		if (b_closed) { 

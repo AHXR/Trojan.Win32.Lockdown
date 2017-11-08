@@ -22,9 +22,13 @@
 //=======================================================
 #include <string>
 #include <fstream>
+
+#include "settings.h"
 #include "pack.h"
 
 using namespace std;
+
+string LOCKER_FILE_NAME;
 
 void buildNewLocker(string fileName) {
 	ifstream
@@ -39,4 +43,8 @@ void buildNewLocker(string fileName) {
 
 	f_old.close();
 	f_new.close();
+}
+
+void setLockerFileName(string name) {
+	LOCKER_FILE_NAME = name;
 }

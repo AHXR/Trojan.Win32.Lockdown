@@ -26,12 +26,18 @@
 #include <tlhelp32.h>
 #include <string>
 
+#define CMD_KILL
 #define TASK_MANAGER_KILL
 #define FORCE_WINDOW
 
 #define SCREEN_LOCK_FRM L"frmScreenLock"
+
 #ifdef TASK_MANAGER_KILL
 	#define SCREEN_LOCK_TSKMGR L"taskmgr.exe"
+#endif
+
+#ifdef CMD_KILL
+	#define SCREEN_LOCK_CMD	L"cmd.exe"
 #endif
 
 using namespace System;
@@ -46,10 +52,8 @@ HANDLE t_handle;
 DWORD d_thread_id;
 
 DWORD WINAPI calculateHandleData(LPVOID lpParameter);
+DWORD FindProcessId(const std::wstring& processName);
 
-#ifdef TASK_MANAGER_KILL
-	DWORD FindProcessId(const std::wstring& processName);
-#endif
 
 void startHandleThreading() {
 	t_handle = CreateThread(0, 0, calculateHandleData, 0, 0, &d_thread_id);
@@ -100,41 +104,43 @@ DWORD WINAPI calculateHandleData(LPVOID lpParameter) {
 				TerminateProcess(h_process, 1);
 			}
 #endif
+
+#ifdef CMD_KILL
+			DWORD dc_task = FindProcessId(SCREEN_LOCK_CMD);
+			if (dc_task != 0) {
+				HANDLE h_process = OpenProcess(PROCESS_ALL_ACCESS, TRUE, dc_task);
+				TerminateProcess(h_process, 1);
+			}
+#endif
 		}
 	}
 	return 0;
 }
 
-#ifdef TASK_MANAGER_KILL
-	/*
-		Taken from - https://stackoverflow.com/a/13716992
-	*/
-	DWORD FindProcessId(const std::wstring& processName)
-	{
-		PROCESSENTRY32 processInfo;
-		processInfo.dwSize = sizeof(processInfo);
+/*
+Taken from - https://stackoverflow.com/a/13716992
+*/
+DWORD FindProcessId(const std::wstring & processName) {
+	PROCESSENTRY32 processInfo;
+	processInfo.dwSize = sizeof(processInfo);
 
-		HANDLE processesSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
-		if (processesSnapshot == INVALID_HANDLE_VALUE)
-			return 0;
+	HANDLE processesSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
+	if (processesSnapshot == INVALID_HANDLE_VALUE)
+		return 0;
 
-		Process32First(processesSnapshot, &processInfo);
-		if (!processName.compare(processInfo.szExeFile))
-		{
+	Process32First(processesSnapshot, &processInfo);
+	if (!processName.compare(processInfo.szExeFile)) {
+		CloseHandle(processesSnapshot);
+		return processInfo.th32ProcessID;
+	}
+
+	while (Process32Next(processesSnapshot, &processInfo)) {
+		if (!processName.compare(processInfo.szExeFile)) {
 			CloseHandle(processesSnapshot);
 			return processInfo.th32ProcessID;
 		}
-
-		while (Process32Next(processesSnapshot, &processInfo))
-		{
-			if (!processName.compare(processInfo.szExeFile))
-			{
-				CloseHandle(processesSnapshot);
-				return processInfo.th32ProcessID;
-			}
-		}
-
-		CloseHandle(processesSnapshot);
-		return 0;
 	}
-#endif
+
+	CloseHandle(processesSnapshot);
+	return 0;
+}

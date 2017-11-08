@@ -23,7 +23,7 @@ In the releases, I've included the builder, the empty screenlock exe (don't run)
 
 ---
 
-# AHXR ScreenLock - Shutdown 2017
+# Trojan.Win32.Lockdown - Shutdown 2017
 
 <p align="center">
 	<img src="https://i.imgur.com/aaClNNk.png" />

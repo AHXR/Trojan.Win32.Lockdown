@@ -22,6 +22,8 @@
 //=======================================================
 #include "pack.h"
 #include "sha256.h"
+#include "settings.h"
+
 #include <string>
 #include <fstream>
 #include <vector>
@@ -34,10 +36,10 @@ void packLocker(string fileName, string password, string message) {
 
 	f_file.open(fileName, fstream::app);
 
-	f_file << "----";
-	f_file << "{" << sha256(password) << "}";
-	f_file << "{" << message << "}";
-	f_file << "{" << "0" << "}";
+	f_file << PACK_SPLITTER;
+	f_file << PACK_OPENER << sha256(password) << PACK_CLOSER;
+	f_file << PACK_OPENER << message << PACK_CLOSER;
+	f_file << PACK_OPENER << PACK_ADDRESS_DEF << PACK_CLOSER;
 
 	f_file.close();
 }
@@ -48,12 +50,28 @@ void packLocker(string fileName, string password, string message, string address
 
 	f_file.open(fileName, fstream::app);
 
-	f_file << "----";
-	f_file << "{" << sha256(password) << "}";
-	f_file << "{" << message << "}";
-	f_file << "{" << address << "}";
+	f_file << PACK_SPLITTER;
+	f_file << PACK_OPENER << sha256(password) << PACK_CLOSER;
+	f_file << PACK_OPENER << message << PACK_CLOSER;
+	f_file << PACK_OPENER << address << PACK_CLOSER;
 
 	f_file.close();
+}
+
+void packLocker(string fileName, string password, string message, string address, string exePath) {
+	fstream
+		f_file;
+
+	f_file.open(fileName, fstream::app);
+
+	f_file << PACK_SPLITTER;
+	f_file << PACK_OPENER << sha256(password) << PACK_CLOSER;
+	f_file << PACK_OPENER << message << PACK_CLOSER;
+	f_file << PACK_OPENER << address << PACK_CLOSER;
+
+	f_file.close();
+	
+	attachExecutable(fileName, exePath);
 }
 
 void attachExecutable(string packedFile, string exePath) {
@@ -67,9 +85,7 @@ void attachExecutable(string packedFile, string exePath) {
 	f_write.open( packedFile, fstream::app | fstream::binary);
 
 	// Creating brackets and writing the exe into the packed file.
-	f_write << "{";
-	f_write << f_exe.rdbuf();
-	f_write << "}";
+	f_write << PACK_OPENER << f_exe.rdbuf() << PACK_CLOSER;
 
 	f_exe.close();
 	f_write.close();
