@@ -1,3 +1,8 @@
+1.4.1 (11/9/2017)
+
+- Icons added to programs
+- Small code clean-up
+
 1.4 (11/7/2017)
 
 - Project renamed to Trojan.Win32.Lockdown
