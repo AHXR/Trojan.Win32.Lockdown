@@ -20,14 +20,6 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-//#define DEBUG_MODE
-
-#define ARG_FILE_NAME 0
-#define ARG_PASSWORD 1
-#define ARG_MESSAGE 2
-#define ARG_EXE 3
-#define ARG_ADDRESS 4
-
 #define PACK_SPLITTER "----"
 #define PACK_OPENER "{"
 #define PACK_CLOSER "}"

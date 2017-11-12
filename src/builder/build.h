@@ -23,8 +23,9 @@
 extern void validateClientBuild(System::String ^ message, System::String ^ password, System::Windows::Forms::SaveFileDialog ^ saveref, bool showDialog=true);
 extern void createClientLocker(System::String ^ fileName, System::String ^ password, System::String ^ message, System::String ^ exe, System::String ^ address, bool exith=true);
 
-#define ERROR_MSG_1		"Illegal Characters"
-#define ERROR_MSG_2		"Please enter a message."
-#define ERROR_MSG_3		"Please enter a password."
-#define WARNING_MSG		"Warning: Unauthorized remote access to another computer is considered illegal in most cases. By toggling this on, you agree and take full responsbility for your actions."
-#define COMPLETE_MSG	"Done."
+#define ERROR_MSG_1			"Illegal Characters"
+#define ERROR_MSG_2			"Please enter a message."
+#define ERROR_MSG_3			"Please enter a password."
+#define WARNING_MSG			"Warning: Unauthorized remote access to another computer is considered illegal in most cases. By toggling this on, you agree and take full responsbility for your actions."
+#define COMPLETE_MSG		"Done."
+#define	LOCKER_FILE_PATH	"AHXRLocker.exe"

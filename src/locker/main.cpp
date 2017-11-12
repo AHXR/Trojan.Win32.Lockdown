@@ -158,7 +158,7 @@ int main() {
 #endif
 
 		// Obtaining the message.
-		size_t t_msg_open = s_search.find(PACK_OPENER, t_pw_close);
+		size_t t_msg_open = s_search.find(PACK_OPENER, t_pw_close + PASSWORD_HASH_LENGTH);
 		size_t t_msg_close = s_search.find(PACK_CLOSER, t_msg_open);
 
 		s_message = s_search.substr(t_msg_open + 1, t_msg_close - t_msg_open - 1); // Adjusting character positions.
@@ -217,7 +217,7 @@ int main() {
 	else
 		Application::Exit();
 
-		START_SERVER_THREAD(); // Locking the program & taskmgr.
+	START_SERVER_THREAD(); // Locking the program & taskmgr.
 
 	if (ss_server_host.compare("0") != 0) {
 		START_CLIENT_THREAD(); // Connect user to listener (if any)

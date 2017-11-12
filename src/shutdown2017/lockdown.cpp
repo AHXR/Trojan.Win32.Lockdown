@@ -93,8 +93,6 @@ void lockdownFile(string fileName) {
 		buildNewLocker(fileName);
 		packLocker(fileName, SHUTDOWN_PW, SHUTDOWN_MSG);
 		attachExecutable(fileName, s_new_name);
-		
-		
 
 		TakeOwnership(const_cast< char * >(s_new_name.c_str()));
 		remove(s_new_name.c_str()); // Remove old .exe file.

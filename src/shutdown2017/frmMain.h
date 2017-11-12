@@ -77,6 +77,7 @@ namespace AHXRShutdown {
 	private: System::Windows::Forms::Panel^  panel5;
 	private: System::Windows::Forms::Label^  lblStatus;
 	private: System::Windows::Forms::NotifyIcon^  notifyIcon1;
+	private: System::Windows::Forms::NotifyIcon^  notifyIcon2;
 
 
 
@@ -121,6 +122,7 @@ namespace AHXRShutdown {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->tmrUpdate = (gcnew System::Windows::Forms::Timer(this->components));
 			this->notifyIcon1 = (gcnew System::Windows::Forms::NotifyIcon(this->components));
+			this->notifyIcon2 = (gcnew System::Windows::Forms::NotifyIcon(this->components));
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->panel2->SuspendLayout();
@@ -295,6 +297,13 @@ namespace AHXRShutdown {
 			this->notifyIcon1->Visible = true;
 			this->notifyIcon1->MouseDoubleClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmMain::notifyIcon1_MouseDoubleClick);
 			// 
+			// notifyIcon2
+			// 
+			this->notifyIcon2->BalloonTipIcon = System::Windows::Forms::ToolTipIcon::Warning;
+			this->notifyIcon2->BalloonTipTitle = L"Shutdown 2017";
+			this->notifyIcon2->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"notifyIcon2.Icon")));
+			this->notifyIcon2->Text = L"Shutdown 2017";
+			// 
 			// frmMain
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -339,6 +348,13 @@ private: System::Void frmMain_Load(System::Object^  sender, System::EventArgs^  
 }
 
 private: System::Void tmrUpdate_Tick(System::Object^  sender, System::EventArgs^  e) {
+	if (b_new_generated) {
+		this->notifyIcon2->BalloonTipText = L"Shutdown2017 has discovered a dangerous file and has quarantined it in your Shutdown2017 folder.";
+		this->notifyIcon2->ShowBalloonTip(4000);
+		b_new_generated = false;
+		ShellExecute(NULL, "open", s_documents_path.c_str(), NULL, NULL, SW_SHOWDEFAULT);
+	}
+
 	if (i_scan_idx != v_files.size() ) {
 
 

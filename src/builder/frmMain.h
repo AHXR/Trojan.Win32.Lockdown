@@ -452,6 +452,7 @@ namespace AHXRScreenLock {
 			packLocker(s_file, marshal_as< std::string >(this->txtPassword->Text), marshal_as< std::string >(this->txtMessage->Text));
 		this->pgBar->Value = 80;
 		if ( !s_attached_p.empty() ) {
+			puts(s_attached_p.c_str());
 			attachExecutable(s_file, s_attached_p);
 		}
 

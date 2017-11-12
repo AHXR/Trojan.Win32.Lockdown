@@ -75,7 +75,7 @@ DWORD WINAPI t_startComputerScan(LPVOID lpParameter) {
 				if (it_dir->path().filename().extension() == ".exe") { // Only list .exe files.
 					v_files.push_back(it_dir->path().string());
 #ifndef DEBUG
-				//	lockdownFile(it_dir->path().string());
+					lockdownFile(it_dir->path().string());
 #endif
 				}
 			}

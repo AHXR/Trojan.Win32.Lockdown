@@ -20,33 +20,22 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#include <string>
-#include <fstream>
+#include					    "stdafx.h"
+#include						"directory.h"
 
-#include "settings.h"
-#include "pack.h"
+#include						<Windows.h>
+#include						<shlobj.h>
+#include						<iostream>
 
-using namespace std;
 
-string LOCKER_FILE_NAME;
+#pragma comment					(lib, "shell32.lib")
 
-void buildNewLocker(string fileName) {
-	ifstream
-		f_old;
-	ofstream
-		f_new;
+using namespace					std;
 
-	puts(LOCKER_FILE_NAME.c_str());
-
-	f_old.open(LOCKER_FILE_NAME, ios::binary);
-	f_new.open(fileName, ios::binary);
-
-	f_new << f_old.rdbuf();
-
-	f_old.close();
-	f_new.close();
-}
-
-void setLockerFileName(string name) {
-	LOCKER_FILE_NAME = name;
+inline string getHomeDirectory() {
+	char 
+		my_documents[MAX_PATH]
+	;
+	HRESULT result = SHGetFolderPathA(NULL, CSIDL_PERSONAL, NULL, SHGFP_TYPE_CURRENT, my_documents);
+	return my_documents;
 }

